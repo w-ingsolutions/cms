@@ -1,0 +1,18 @@
+{
+  "Id": 4,
+  "Naziv": "Fasada hirofa",
+  "Sadrzaj": {
+    "Opis": "Fasada hirofa",
+    "Obracun": "Obračun po kilogrammu",
+    "Proizvodjac": "fasada",
+    "OsobineNamena": "Hirofa je tankoslojni mineralni krečno-cementni malter namenjen za ukrašavanje spoljašnjih zidnih površina, granulacije 1,0 mm. Odgovarajuće podloge su sve površine od krečnih, cementnih i cementno-krečnih maltera (stare najmanje mesec dana), cementno-vlaknaste ploče, betonske površine (stare najmanje 3 meseca) i sl. Hirofa se proizvodi u beloj boj i tonira se po Fasada ton karti",
+    "NacinRada": "\"Podloga na koju se nanosi mineralni dekorativni malter mora biti čvrsta i grubo zaribana, bez prašine, slabo vezanih delova, soli i masnih mrlja. Uljane boje i lakove potrebno je ukloniti sa zida pre nanošenja Hirofe. Ako je površina suva potrebno ju je pokvasiti vodom da bi bila vlažna i ohlađena, što omogućava bolje vezivanje i prijanjanje uz podlogu.  Hirofa se meša električnim mikserom sa  oko 25% vode (na džak od 25 kg dodati oko 6 litara vode), do homogenizacije. Masu ostaviti da odstoji 10 min, zatim još jednom promešati i po potrebi dodati malo vode za podešavanje odgovarajuće konzistencije. Malter nanositi pomoću „ježa“ ili kompresorskim pištoljem prilagođenim špricanju Hirofe, pri čemu se dobija struktura kao prskana fasada. Malter je potrebno nanositi brzo, ravnomerno i bez prekida na kontinualnoj zidnoj površini. Preporučuje se nanošenje u više tanjih nanosa, kako se malter ne bi slivao i ispucao. Između dva nanosa treba sačekati da malter površinski osuši. Nakon nanošenja potrebno je u periodu od nekoliko dana orošavati površinu. Time se sprečava naglo sušenje i omogućava postepeno vezivanje, čvrstoća i otpornost.  Temperatura vazduha i podloge prilikom ugradnje treba da bude od +5°C do +30°C i relativna vlažnost vazduha ispod 65%. Ne raditi na vetru ili promaji, fasadu zaštititi od direktnih sunčevih zraka. Odmah nakon upotrebe alat oprati vodom. Očvrsle ostatke mehanički ukloniti. Hirofa se proizvodi u beloj boj, tonira se po Fasada ton karti. Za poručene količine manje od 600 kg, toniranje vrši majstor na licu mesta. Pri tome treba voditi računa da se dobro promeša u praškastom stanju da ne bi došlo do šarenila na fasadi.  Preporučujemo upotrebu Hirofe u beloj boje i naknadno bojenje mineralnog maltera disperzivnim akrilnim ili silikatnim bojama u željenoj nijansi, prema Fasada ton karti. Bojenje vršiti nakon 28 dana od nanošenja Hirofe. \n \n \"",
+    "JedinicaPotrosnje": "kg/m²",
+    "Potrosnja": 3.5,
+    "RokUpotrebe": "Rok trajanja do 6 meseci u originalnom i neoštećenom pakovanju. Proizvod čuvati u originalnoj, zatvorenoj ambalaži na suvom mestu, zaštićenom od vlage.",
+    "Jedinica": "kg",
+    "Pakovanje": 25,
+    "Cena": 0.15,
+    "Slug": "fasada_hirofa"
+  }
+}

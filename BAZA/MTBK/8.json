@@ -1,0 +1,18 @@
+{
+  "Id": 8,
+  "Naziv": "Lepak za kamenu vunu",
+  "Sadrzaj": {
+    "Opis": "Lepak za kamenu vunu",
+    "Obracun": "Obračun po kilogrammu",
+    "Proizvodjac": "maxima",
+    "OsobineNamena": "STIROMOL Elastic je jednokomponentni, visokoelastični, suvi tip građevinskog lepka, izrađen od hidrauličnih i sintetičkih veziva, uz dodatak specijalnih aditiva. Namenjen je za lepljenje i armiranje termoizolacionih ploča: stiropora, termosila, stirodura i kamene vune, na sve vrste mineralnih podloga.",
+    "NacinRada": "STIROMOL Elastic od 25kg dodati na 6-6.5l vode i mešati do stvaranja homogene mase bez grudvica. Sačekati 10 minuta, pa ponovo intenzivno izmešati. Ovako pripremljena masa spremna je za ugradnju i mora se utrošiti u roku od 2 časa. STIROMOL Elastic nanositi na termoizolacione ploče uz ivicu i u 3-6 tačaka po sredini ploče (pokrivnost lepkom min. 40%). Na ploče kamene vune naneti lepak celom površinom, koristeći nazubljenu gletaricu. Ploče pritiskanjem lepiti na čvrstu i čistu podlogu. Na zalepljene termoizolacione ploče, nakon 2-3 dana, preporučujemo tiplovanje (6 kom/m²). Postavljanje armaturne mrežice vršiti utiskivanjem u sloj nanetog STIROMOL Elastic-a, u debljini od 2-3mm, sa preklopom od 10cm, a zatim celokupnu površinu izravnati STIROMOL Elastic-om. Ukupna debljina nanetog STIROMOL-a Elastic treba da bude min. 4mm.",
+    "JedinicaPotrosnje": "kg/m²",
+    "Potrosnja": 5,
+    "RokUpotrebe": "12 meseci od datuma proizvodnje istaknutog na ambalaži. Čuvati u zatvorenoj i neoštećenoj ambalaži, u suvoj i provetrenoj prostoriji",
+    "Jedinica": "kg",
+    "Pakovanje": 25,
+    "Cena": 0.14,
+    "Slug": "lepak_za_kamenu_vunu"
+  }
+}
