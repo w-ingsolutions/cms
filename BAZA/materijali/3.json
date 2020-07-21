@@ -1,16 +1,18 @@
 {
   "Id": 3,
-      "Naziv": "Bavalit fasada",
-      "Opis": "Bavalit fasada",
-      "Obracun": "Obračun po kilogramu",
-      "Proizvodjac": "granit pescar",
-      "OsobineNamena": "Bavalit fasada u prahu izrađena na bazi najkvalitetnijih polimera, odgovarajućih punila i aditiva. \n\nUpotrebljava se za zaštitu fasade ili za dekorativnu obradu unutrašnjih prostorija, a nanosi se na razne podloge od betona, krečnog i produžnog maltera. \"",
-      "NacinRada": "Priprema se za nanošenje tako što se sadržaj vreće od 40 kg suve komponente izmeša u mešalici za beton uz dodatak jedne kante emulzije od 1,2 kg i 10 litara vode, do potpune homogenizacije. Pripremljena masa pogodne gustoće nanosi se na pripremljenu podlogu pomoću metalne gletelice, zatim se zariba pomocu tvrdog stiropora. ",
-      "JedinicaPotrosnje": "kg/m² Utrošak zavisi od načina nanošenja i podloge.",
-      "Potrosnja": 3.5,
-      "RokUpotrebe": "Rok upotrebe je 12 meseci u orginalnoj ambalaži. ",
-      "Jedinica": "kg",
-      "Pakovanje": 25,
-      "Cena": 0.165,
-      "Slug": "bavalit_fasada"
+  "Naziv": "Bavalit fasada",
+  "Sadrzaj": {
+    "Opis": "Bavalit fasada",
+    "Obracun": "Obračun po kilogramu",
+    "Proizvodjac": "granit pescar",
+    "OsobineNamena": "Bavalit fasada u prahu izrađena na bazi najkvalitetnijih polimera, odgovarajućih punila i aditiva. \n\nUpotrebljava se za zaštitu fasade ili za dekorativnu obradu unutrašnjih prostorija, a nanosi se na razne podloge od betona, krečnog i produžnog maltera. \"",
+    "NacinRada": "Priprema se za nanošenje tako što se sadržaj vreće od 40 kg suve komponente izmeša u mešalici za beton uz dodatak jedne kante emulzije od 1,2 kg i 10 litara vode, do potpune homogenizacije. Pripremljena masa pogodne gustoće nanosi se na pripremljenu podlogu pomoću metalne gletelice, zatim se zariba pomocu tvrdog stiropora. ",
+    "JedinicaPotrosnje": "kg/m² Utrošak zavisi od načina nanošenja i podloge.",
+    "Potrosnja": 3.5,
+    "RokUpotrebe": "Rok upotrebe je 12 meseci u orginalnoj ambalaži. ",
+    "Jedinica": "kg",
+    "Pakovanje": 25,
+    "Cena": 0.165,
+    "Slug": "bavalit_fasada"
+  }
 }

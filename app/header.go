@@ -20,7 +20,7 @@ func header(w *WingCMS) func(gtx C) D {
 func (w *WingCMS) headerMenu() func(gtx C) D {
 	r := func(gtx C) D {
 		return lyt.Format(gtx, "hflexb(middle,r(_),r(_),r(_),r(_),r(_))",
-			w.stranaDugme(radoviDugme, func() {}, "RADOVI", "radovi"),
+			w.stranaDugme(radoviDugme, func() {}, "KOMANDNA TABLA", "komandna_tabla"),
 			helper.DuoUIline(true, 0, 2, 2, w.UI.Tema.Colors["DarkGrayI"]),
 			w.stranaDugme(sumaDugme, func() {}, "SUMA", "sumaRadovi"),
 			helper.DuoUIline(true, 0, 2, 2, w.UI.Tema.Colors["DarkGrayI"]),

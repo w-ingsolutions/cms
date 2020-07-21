@@ -1,116 +1,93 @@
-package db
+package main
 
 import (
-	"encoding/json"
+	"context"
 	"fmt"
-	"gioui.org/widget"
-	scribble "github.com/nanobox-io/golang-scribble"
-	"github.com/w-ingsolutions/c/model"
-	"golang.org/x/text/unicode/norm"
-	"unicode"
+	format "github.com/ipfs/go-ipld-format"
+	"io/ioutil"
+
+	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-log/v2"
+	crypto "github.com/libp2p/go-libp2p-core/crypto"
+	"github.com/multiformats/go-multiaddr"
+	ipfslite "github.com/w-ingsolutions/cms/db/pkg"
 )
 
-type DuoUIdb struct {
-	DB     *scribble.Driver
-	Folder string `json:"folder"`
-	Name   string `json:"name"`
+type idb struct {
+	c  context.Context
+	p  *ipfslite.Peer
+	cd string
 }
 
-type Ddb interface {
-	//DbReadAllTypes()map[int]model.WingCalGrupaRadova
-	DbRead(folder, name string) model.W
-	DbReadAll(folder string) []model.W
-	DbWrite(folder, name string, data interface{})
-}
-
-func DuoUIdbInit(dataDir string) (d *DuoUIdb) {
-	d = new(DuoUIdb)
-	db, err := scribble.New(dataDir, nil)
+func main() {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	log.SetLogLevel("*", "warn")
+	// Bootstrappers are using 1024 keys. See:
+	// https://github.com/ipfs/infra/issues/378
+	crypto.MinRsaKeyBits = 1024
+	ds, err := ipfslite.BadgerDatastore("test")
 	if err != nil {
-		fmt.Println("Error", err)
+		panic(err)
 	}
-	d.DB = db
-	return
-}
-
-var skip = []*unicode.RangeTable{
-	unicode.Mark,
-	unicode.Sk,
-	unicode.Lm,
-}
-
-var safe = []*unicode.RangeTable{
-	unicode.Letter,
-	unicode.Number,
-}
-
-var _ Ddb = &DuoUIdb{}
-
-//func (d *DuoUIdb) DbReadAllTypes() map[int]model.WingCalGrupaRadova{
-//	items := make(map[int]model.WingCalGrupaRadova)
-//	//types := []string{"assets", "config", "apps"}
-//
-//	//for t := range types {
-//	//	items[t] = d.DbReadAll(t)
-//	//}
-//	for i := 1; i <= 31; i++ {
-//		items[i] = d.DbReadAll(fmt.Sprint(i))
-//	}
-//	return items
-//}
-//func (d *DuoUIdb) DbReadTypeAll(f string) map[]model.WingVrstaRadova{
-//	return d.DbReadAll(f)
-//}
-
-func (d *DuoUIdb) DbReadAll(folder string) (items []model.W) {
-	itemsRaw, err := d.DB.ReadAll(folder)
+	priv, _, err := crypto.GenerateKeyPair(crypto.RSA, 2048)
 	if err != nil {
-		fmt.Println("Error", err)
+		panic(err)
 	}
-	//fmt.Println("itemsRaw", itemsRaw)
+	listen, _ := multiaddr.NewMultiaddr("/ip4/0.0.0.0/tcp/4005")
+	h, dht, err := ipfslite.SetupLibp2p(
+		ctx,
+		priv,
+		nil,
+		[]multiaddr.Multiaddr{listen},
+		ds,
+		ipfslite.Libp2pOptionsExtra...,
+	)
+	if err != nil {
+		panic(err)
+	}
+	p, err := ipfslite.New(ctx, ds, h, dht, nil)
+	if err != nil {
+		panic(err)
+	}
+	p.Bootstrap(ipfslite.DefaultBootstrapPeers())
+	ib := &idb{
+		c:  ctx,
+		p:  p,
+		cd: "QmS4ustL54uo8FzR9455qaxZwuMiUhyvMcX9Ba8nUH4uVv",
+	}
+	ib.collection()
+}
 
-	for _, bt := range itemsRaw {
-		item := model.W{}
-		if err := json.Unmarshal([]byte(bt), &item); err != nil {
-			fmt.Println("Error", err)
+func (ib *idb) collection() {
+	c, _ := cid.Decode(ib.cd)
+	node, err := ib.p.Get(ib.c, c)
+	if err != nil {
+		panic(err)
+	}
+	navNode := format.NewNavigableIPLDNode(node, ib.p.DAGService)
+	for i := 0; i < int(navNode.ChildTotal()); i++ {
+		childNode, err := navNode.FetchChild(ib.c, uint(i))
+		if err != nil {
+			panic(err)
 		}
-		//fmt.Println("item", item)
-		item.Izmena = new(widget.Clickable)
-		item.Brisanje = new(widget.Clickable)
-		items = append(items, item)
-		//fmt.Println("items", items)
-
+		n := format.ExtractIPLDNode(childNode)
+		childCID := n.Cid().String()
+		fmt.Println("graphOut", childCID)
 	}
-	return items
 }
 
-func (d *DuoUIdb) DbRead(folder, name string) model.W {
-	item := model.W{}
-	if err := d.DB.Read(folder, name, &item); err != nil {
-		fmt.Println("Error", err)
+func (ib *idb) item() {
+	c, _ := cid.Decode(ib.cd)
+	rsc, err := ib.p.GetFile(ib.c, c)
+	if err != nil {
+		panic(err)
 	}
-	return item
-}
-func (d *DuoUIdb) DbWrite(folder, name string, data interface{}) {
-	d.DB.Write(folder, name, data)
-}
+	defer rsc.Close()
+	content, err := ioutil.ReadAll(rsc)
+	if err != nil {
+		panic(err)
+	}
 
-func slug(text string) string {
-	buf := make([]rune, 0, len(text))
-	dash := false
-	for _, r := range norm.NFKD.String(text) {
-		switch {
-		case unicode.IsOneOf(safe, r):
-			buf = append(buf, unicode.ToLower(r))
-			dash = true
-		case unicode.IsOneOf(skip, r):
-		case dash:
-			buf = append(buf, '-')
-			dash = false
-		}
-	}
-	if i := len(buf) - 1; i >= 0 && buf[i] == '-' {
-		buf = buf[:i]
-	}
-	return string(buf)
+	fmt.Println(string(content))
 }

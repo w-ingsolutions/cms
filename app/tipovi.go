@@ -25,7 +25,7 @@ func tipoviSadrzaja() map[int]model.TipSadrzaja {
 			Naziv:        "Pravno lice",
 			NazivMnozina: "Pravna lica",
 			Slug:         "pravno_lice",
-			SlugMnozina:  "pravna_lice",
+			SlugMnozina:  "pravna_lica",
 			Link:         new(widget.Clickable),
 		},
 		3: model.TipSadrzaja{

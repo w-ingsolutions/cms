@@ -47,7 +47,7 @@ func (w *WingCMS) Meni() func(gtx C) D {
 								return btn.Layout(gtx)
 							},
 						)
-						if w.Strana == tipSadrzaja.SlugMnozina {
+						if w.Strana.Slug == tipSadrzaja.SlugMnozina {
 							b = lyt.Format(gtx, "vflexb(middle,r(_),r(_))",
 								func(gtx C) D {
 									return btn.Layout(gtx)
@@ -64,8 +64,7 @@ func (w *WingCMS) Meni() func(gtx C) D {
 
 func (w *WingCMS) LinkoviMenijaKlik(l model.TipSadrzaja) {
 	for l.Link.Clicked() {
-		w.Strana = l.SlugMnozina
-		//w.UcitavanjeTipaSadrzaja()
+		w.Strana = WingStrana{l.Naziv, l.SlugMnozina}
 		w.Prikaz = w.Db.DbReadAll(l.SlugMnozina)
 	}
 }

@@ -15,8 +15,8 @@ func footer(w *WingCMS) func(gtx C) D {
 		return container.DuoUIcontainer(w.UI.Tema, 4, w.UI.Tema.Colors["DarkGrayI"]).Layout(gtx, layout.Center, func(gtx C) D {
 			gtx.Constraints.Min.X = gtx.Constraints.Max.X
 			return lyt.Format(gtx, "hflexb(middle,r(_),r(_),r(_))",
-				w.iconLink(podesavanjeDugme, "podesavanja", "settingsIcon"),
-				w.iconLink(pomocDugme, "pomoc", "settingsIcon"),
+				w.iconLink(podesavanjeDugme, "Podesavanja", "podesavanja", "settingsIcon"),
+				w.iconLink(pomocDugme, "Pomoc", "pomoc", "settingsIcon"),
 				w.footerMenu())
 		})
 	}
@@ -31,7 +31,7 @@ func (w *WingCMS) footerMenu() func(gtx C) D {
 	}
 }
 
-func (w *WingCMS) iconLink(b *widget.Clickable, s, i string) func(gtx C) D {
+func (w *WingCMS) iconLink(b *widget.Clickable, n, s, i string) func(gtx C) D {
 	return func(gtx C) D {
 		return layout.Center.Layout(gtx, func(gtx C) D {
 			btn := material.IconButton(w.UI.Tema.T, b, w.UI.Tema.Icons[i])
@@ -45,7 +45,7 @@ func (w *WingCMS) iconLink(b *widget.Clickable, s, i string) func(gtx C) D {
 			}
 			btn.Background = helper.HexARGB(w.UI.Tema.Colors["White"])
 			for b.Clicked() {
-				w.Strana = s
+				w.Strana = WingStrana{n, s}
 			}
 			return btn.Layout(gtx)
 		})

@@ -15,7 +15,7 @@ import (
 
 func NewWingCMS() *WingCMS {
 	w := &WingCMS{
-		Strana: "komandna_tabla",
+		Strana: WingStrana{"Komandna tabla", "komandna_tabla"},
 		Db:     db.DuoUIdbInit("BAZA"),
 	}
 	w.Podesavanja = &WingPodesavanja{

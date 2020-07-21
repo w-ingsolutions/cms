@@ -1,0 +1,48 @@
+
+naziv_objekta	spratnost_objekta
+stambeni objekat	Po+P+5(6)
+poslovni objekat	P
+stambeno poslovni objekat	Su+P+3+Pk-dup
+hotel	P+6
+pasarela	Su+P+4(5)
+apartmani	Su+VP+Pk
+kuca	Po+P+2+Pk
+kej	P+Pk
+INSTALACIJA VODOVODA	Su+P+Pk
+poslovni prostor	-
+Veterinarska ambulanta	Su+P+G+7
+vikend objekat
+proizvodni objekat
+skladište
+podno skladište
+silos
+TV toranj
+letnja bašta
+hala
+ograda
+gasna instalacija
+benzinska pumpa
+osnovna skola
+kotlarnica
+ambulanta
+postrojenje za preciscavanje vode
+perionica
+staklenik
+skola
+javni objekat
+
+
+
+
+stambeni objekat	Po+P+5(6)
+poslovni objekat	P
+stambeno poslovni objekat	Su+P+3+Pk-dup
+hotel	P+6
+pasarela	Su+P+4(5)
+apartmani	Su+VP+Pk
+kuca	Po+P+2+Pk
+kej	P+Pk
+INSTALACIJA VODOVODA	Su+P+Pk
+pogon za preciscavanje vode	-
+Sportska sala	Su+P+G+7
+Klub za stara I odrasla lica

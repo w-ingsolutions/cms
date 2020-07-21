@@ -35,7 +35,7 @@ func (w *WingCMS) stranaDugme(b *widget.Clickable, f func(), t, p string) func(g
 		btn.Background = helper.HexARGB(w.UI.Tema.Colors["Secondary"])
 		for b.Clicked() {
 			f()
-			w.Strana = p
+			w.Strana = WingStrana{t, p}
 		}
 		return btn.Layout(gtx)
 	}

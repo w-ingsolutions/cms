@@ -22,7 +22,7 @@ var (
 )
 
 type WingCMS struct {
-	Strana         string
+	Strana         WingStrana
 	EditPolja      *model.EditabilnaPoljaVrsteRadova
 	TipoviSadrzaja map[int]model.TipSadrzaja
 	Db             *db.DuoUIdb
@@ -62,11 +62,16 @@ type WingPodesavanja struct {
 }
 
 type WingUloge struct {
-	Projektanti []*model.WingLice
-	Investotori []*model.WingLice
+	Projektanti []*model.WingPravnoLice
+	Investotori []*model.WingPravnoLice
 }
 type WingCounters struct {
 	Kolicina  *counter.DuoUIcounter
 	Radovi    *counter.DuoUIcounter
 	Materijal *counter.DuoUIcounter
+}
+
+type WingStrana struct {
+	Naziv string
+	Slug  string
 }
