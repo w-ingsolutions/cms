@@ -7,6 +7,9 @@ import (
 	"gioui.org/io/system"
 	"gioui.org/layout"
 	"github.com/gioapp/gel/helper"
+	"github.com/libp2p/go-libp2p-core/crypto"
+	"github.com/marcetin/jdb"
+	"github.com/w-ingsolutions/c/model"
 	cms "github.com/w-ingsolutions/cms/app"
 	"github.com/w-ingsolutions/cms/cfg"
 	in "github.com/w-ingsolutions/cms/cfg/ini"
@@ -15,6 +18,19 @@ import (
 )
 
 func main() {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	crypto.MinRsaKeyBits = 1024
+	ds, err := jdb.BadgerDatastore("test")
+	if err != nil {
+		panic(err)
+	}
+	peer := jdb.GetPeer(ctx, ds)
+	//fmt.Println(string(content))
+	var materijal model.WingMaterijal
+
+	jdb.Read(ctx, peer, "QmPwhwbzPapHA3sA4UjD1m1Zw78pboQx6m9FyhK3cYN1dB", &materijal)
+	fmt.Println("WingMaterijal", materijal)
 
 	w := cms.NewWingCMS()
 

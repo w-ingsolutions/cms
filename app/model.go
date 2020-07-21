@@ -9,7 +9,6 @@ import (
 	"github.com/gioapp/gel/theme"
 	"github.com/w-ingsolutions/c/model"
 	"github.com/w-ingsolutions/c/pkg/translate"
-	"github.com/w-ingsolutions/cms/db"
 )
 
 type (
@@ -25,11 +24,11 @@ type WingCMS struct {
 	Strana         WingStrana
 	EditPolja      *model.EditabilnaPoljaVrsteRadova
 	TipoviSadrzaja map[int]model.TipSadrzaja
-	Db             *db.DuoUIdb
-	UI             WingUI
-	API            WingAPI
-	Podesavanja    *WingPodesavanja
-	Prikaz         []model.W
+	//Db             *db.DuoUIdb
+	UI          WingUI
+	API         WingAPI
+	Podesavanja *WingPodesavanja
+	Prikaz      []model.W
 }
 
 type WingUI struct {
