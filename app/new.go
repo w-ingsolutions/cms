@@ -9,13 +9,14 @@ import (
 	"github.com/gioapp/gel/theme"
 	wapp "github.com/w-ingsolutions/c/pkg/app"
 	"github.com/w-ingsolutions/c/pkg/icons"
+	"github.com/w-ingsolutions/cms/db"
 	"path/filepath"
 )
 
 func NewWingCMS() *WingCMS {
 	w := &WingCMS{
 		Strana: WingStrana{"Komandna tabla", "komandna_tabla"},
-		//Db:     db.DuoUIdbInit("BAZA"),
+		Db:     db.DuoUIdbInit("BAZA"),
 	}
 	w.Podesavanja = &WingPodesavanja{
 		Naziv: "Kalkulator",

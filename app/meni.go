@@ -65,7 +65,7 @@ func (w *WingCMS) Meni() func(gtx C) D {
 func (w *WingCMS) LinkoviMenijaKlik(l model.TipSadrzaja) {
 	for l.Link.Clicked() {
 		w.Strana = WingStrana{l.Naziv, l.SlugMnozina}
-		//w.Prikaz = w.Db.DbReadAll(l.SlugMnozina)
+		w.Prikaz = w.Db.DbReadAll(l.SlugMnozina)
 	}
 }
 
