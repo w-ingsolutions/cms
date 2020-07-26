@@ -20,6 +20,8 @@ var (
 
 	nazadDugme = new(widget.Clickable)
 
+	noviTipDugme = new(widget.Clickable)
+
 	sveOdTipaSadrzajaDugme  = new(widget.Clickable)
 	dodajSadrzajDugme       = new(widget.Clickable)
 	kategorijeSadrzajaDugme = new(widget.Clickable)

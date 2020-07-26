@@ -22,14 +22,20 @@ var (
 )
 
 type WingCMS struct {
-	Strana         WingStrana
-	EditPolja      *model.EditabilnaPoljaVrsteRadova
-	TipoviSadrzaja map[int]model.TipSadrzaja
-	Db             *db.DuoUIdb
-	UI             WingUI
-	API            WingAPI
-	Podesavanja    *WingPodesavanja
-	Prikaz         []model.W
+	Strana               WingStrana
+	EditPolja            *model.EditabilnaPoljaVrsteRadova
+	TipoviSadrzaja       map[string]model.TipSadrzaja
+	TipoviSadrzajaPrikaz []model.TipSadrzaja
+	Db                   *db.DuoUIdb
+	UI                   WingUI
+	API                  WingAPI
+	Podesavanja          *WingPodesavanja
+	Prikaz               prikaz
+}
+
+type prikaz struct {
+	w map[string]interface{}
+	e []func(gtx C) D
 }
 
 type WingUI struct {

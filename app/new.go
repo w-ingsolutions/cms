@@ -57,7 +57,34 @@ func NewWingCMS() *WingCMS {
 	w.UI.Tema.Icons = icons.NewWingUIicons()
 
 	w.TipoviSadrzaja = tipoviSadrzaja()
-
+	//m := model.WingMaterijal{
+	//	Id:                2,
+	//	Naziv:             "Masa za španski zid",
+	//	Opis:              "Masa za španski zid",
+	//	Obracun:           "Obračun po kilogrammu",
+	//	Proizvodjac:       "evrojug",
+	//	OsobineNamena:     "Španski zid je.",
+	//	NacinRada:         "Masa se meša s.",
+	//	JedinicaPotrosnje: "m2/kg",
+	//	Potrosnja:         2,
+	//	RokUpotrebe:       "12 meseci od datuma proizvodnje istaknutog na ambalaži. Cuvati u originalnoj, dobro zatvorenoj i neoštecenoj ambalaži, pri temperaturi od +5°C do +25",
+	//	Jedinica:          "kg",
+	//	Pakovanje:         25,
+	//	Cena:              0.19,
+	//	Slug:              "masa_za_spanski_zid",
+	//}
+	//
+	//var bytesBuf bytes.Buffer
+	//encoder := gob.NewEncoder(&bytesBuf)
+	//err := encoder.Encode(m)
+	//if err != nil {
+	//
+	//}
+	//w.Db.DB.Write(bytesBuf.Bytes())
+	w.tipoviSadrzajaPrikaz()
+	//var materijal model.WingMaterijal
+	//w.Db.DB.Read("bafybeihs3p4g232wocqd5ouoakrwm5kocjaexpar6oekkn6qzez5nqj3vu", &materijal)
+	//fmt.Println("WingMaterijal", materijal)
 	return w
 }
 

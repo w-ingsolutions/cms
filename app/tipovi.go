@@ -5,49 +5,63 @@ import (
 	"github.com/w-ingsolutions/c/model"
 )
 
-func tipoviSadrzaja() map[int]model.TipSadrzaja {
-	return map[int]model.TipSadrzaja{
-		0: model.TipSadrzaja{
+func tipoviSadrzaja() map[string]model.TipSadrzaja {
+	return map[string]model.TipSadrzaja{
+		"radovi": model.TipSadrzaja{
 			Naziv:        "Rad",
 			NazivMnozina: "Radovi",
 			Slug:         "rad",
 			SlugMnozina:  "radovi",
+			Struktura:    new(model.WingVrstaRadova),
 			Link:         new(widget.Clickable),
 		},
-		1: model.TipSadrzaja{
+		"materijal": model.TipSadrzaja{
 			Naziv:        "Materijal",
 			NazivMnozina: "Materijali",
 			Slug:         "materijal",
 			SlugMnozina:  "materijali",
+			Struktura:    new(model.WingMaterijal),
 			Link:         new(widget.Clickable),
 		},
-		2: model.TipSadrzaja{
+		"pravno_lice": model.TipSadrzaja{
 			Naziv:        "Pravno lice",
 			NazivMnozina: "Pravna lica",
 			Slug:         "pravno_lice",
 			SlugMnozina:  "pravna_lica",
+			Struktura:    new(model.WingPravnoLice),
 			Link:         new(widget.Clickable),
 		},
-		3: model.TipSadrzaja{
+		"fizicko_lice": model.TipSadrzaja{
 			Naziv:        "Fizicko lice",
 			NazivMnozina: "Fizicka lica",
 			Slug:         "fizicko_lice",
 			SlugMnozina:  "fizicka_lica",
+			Struktura:    new(model.WingFizickoLice),
 			Link:         new(widget.Clickable),
 		},
-		4: model.TipSadrzaja{
+		"objekat": model.TipSadrzaja{
 			Naziv:        "Objekat",
 			NazivMnozina: "Objekti",
 			Slug:         "objekat",
 			SlugMnozina:  "objekti",
+			Struktura:    new(model.WingObjekat),
 			Link:         new(widget.Clickable),
 		},
-		5: model.TipSadrzaja{
+		"vrsta_objekta": model.TipSadrzaja{
 			Naziv:        "Vrsta objekta",
 			NazivMnozina: "Vrste objekta",
 			Slug:         "vrsta_objekta",
 			SlugMnozina:  "vrste_objekta",
+			Struktura:    new(model.WingObjekat),
 			Link:         new(widget.Clickable),
 		},
+	}
+}
+
+func (w *WingCMS) tipoviSadrzajaPrikaz() {
+	var tipovi []model.TipSadrzaja
+	for _, t := range w.TipoviSadrzaja {
+		tipovi = append(tipovi, t)
+		w.TipoviSadrzajaPrikaz = tipovi
 	}
 }

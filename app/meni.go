@@ -28,15 +28,15 @@ func (w *WingCMS) Meni() func(gtx C) D {
 		return container.DuoUIcontainer(w.UI.Tema, 4, w.UI.Tema.Colors["DarkGrayI"]).Layout(gtx, layout.N, func(gtx C) D {
 			gtx.Constraints.Max.X = 180
 			gtx.Constraints.Min.Y = gtx.Constraints.Max.Y
-			return lyt.Format(gtx, "vflexe(middle,r(_),r(_))",
+			return lyt.Format(gtx, "vflexe(middle,r(_),r(_),r(_))",
 				func(gtx C) D {
 					ic := w.UI.Tema.Icons["logo"]
 					ic.Color = helper.HexARGB("ffb8df42")
 					return ic.Layout(gtx, unit.Dp(32))
 				},
 				func(gtx C) D {
-					return meniList.Layout(gtx, len(w.TipoviSadrzaja), func(gtx C, i int) D {
-						tipSadrzaja := w.TipoviSadrzaja[i]
+					return meniList.Layout(gtx, len(w.TipoviSadrzajaPrikaz), func(gtx C, i int) D {
+						tipSadrzaja := w.TipoviSadrzajaPrikaz[i]
 						btn := icontextbtn.IconTextBtn(w.UI.Tema.T, tipSadrzaja.Link, w.UI.Tema.Icons[tipSadrzaja.SlugMnozina], unit.Dp(48), w.UI.Tema.Colors["Light"], tipSadrzaja.NazivMnozina)
 						btn.TextSize = unit.Dp(16)
 						btn.CornerRadius = unit.Dp(0)
@@ -57,7 +57,9 @@ func (w *WingCMS) Meni() func(gtx C) D {
 						}
 						return b
 					})
-				})
+				},
+				w.stranaDugme(noviTipDugme, w.noviTip(), "Dodaj Novi Tip", "novi_tip"),
+			)
 		})
 	}
 }
@@ -65,7 +67,7 @@ func (w *WingCMS) Meni() func(gtx C) D {
 func (w *WingCMS) LinkoviMenijaKlik(l model.TipSadrzaja) {
 	for l.Link.Clicked() {
 		w.Strana = WingStrana{l.Naziv, l.SlugMnozina}
-		w.Prikaz = w.Db.DbReadAll(l.SlugMnozina)
+		//w.Prikaz = w.Db.DbReadAll(l.SlugMnozina)
 	}
 }
 
