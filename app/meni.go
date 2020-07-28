@@ -7,7 +7,6 @@ import (
 	"github.com/gioapp/gel/container"
 	"github.com/gioapp/gel/helper"
 	"github.com/gioapp/gel/icontextbtn"
-	"github.com/w-ingsolutions/c/model"
 	"github.com/w-ingsolutions/c/pkg/lyt"
 )
 
@@ -58,36 +57,41 @@ func (w *WingCMS) Meni() func(gtx C) D {
 						return b
 					})
 				},
-				w.stranaDugme(noviTipDugme, w.noviTip(), "Dodaj Novi Tip", "novi_tip"),
+				w.stranaDugme(noviTipDugme, w.podesavanjaTipa(TipSadrzajaPrikaz{}), "Dodaj Novi Tip", "novi_tip"),
 			)
 		})
 	}
 }
 
-func (w *WingCMS) LinkoviMenijaKlik(l model.TipSadrzaja) {
+func (w *WingCMS) LinkoviMenijaKlik(l TipSadrzajaPrikaz) {
 	for l.Link.Clicked() {
 		w.Strana = WingStrana{l.Naziv, l.SlugMnozina}
 		//w.Prikaz = w.Db.DbReadAll(l.SlugMnozina)
 	}
 }
 
-func (w *WingCMS) tipSadrzajaPodMeni(s model.TipSadrzaja) func(gtx C) D {
+func (w *WingCMS) tipSadrzajaPodMeni(s TipSadrzajaPrikaz) func(gtx C) D {
 	return func(gtx C) D {
-		return lyt.Format(gtx, "vflexb(middle,r(_),r(_),r(_),r(_))",
-			w.tipSadrzajaPodMeniDugme(sveOdTipaSadrzajaDugme, "Sve od "+s.NazivMnozina),
-			w.tipSadrzajaPodMeniDugme(dodajSadrzajDugme, "Dodaj novi"+s.Naziv),
-			w.tipSadrzajaPodMeniDugme(kategorijeSadrzajaDugme, "Kategorije"),
-			w.tipSadrzajaPodMeniDugme(oznakeSadrzajaDugme, "Oznake"),
+		return lyt.Format(gtx, "vflexb(middle,r(_),r(_),r(_),r(_),r(_))",
+			w.tipSadrzajaPodMeniDugme(sveOdTipaSadrzajaDugme, func() {}, "Sve od "+s.NazivMnozina, s.SlugMnozina),
+			w.tipSadrzajaPodMeniDugme(dodajSadrzajDugme, func() {}, "Dodaj novi"+s.Naziv, "novi"+s.Slug),
+			w.tipSadrzajaPodMeniDugme(kategorijeSadrzajaDugme, func() {}, "Kategorije", "kategorije"),
+			w.tipSadrzajaPodMeniDugme(oznakeSadrzajaDugme, func() {}, "Oznake", "oznake"),
+			w.tipSadrzajaPodMeniDugme(podesavanjeSadrzajaDugme, w.podesavanjaTipa(s), "Podesavanja", "podesavanja"),
 		)
-
 	}
 }
-func (w *WingCMS) tipSadrzajaPodMeniDugme(l *widget.Clickable, n string) func(gtx C) D {
+
+func (w *WingCMS) tipSadrzajaPodMeniDugme(b *widget.Clickable, f func(), t, p string) func(gtx C) D {
 	return func(gtx C) D {
-		btn := icontextbtn.IconTextBtn(w.UI.Tema.T, l, w.UI.Tema.Icons["stolarski"], unit.Dp(48), w.UI.Tema.Colors["Light"], " "+n)
+		btn := icontextbtn.IconTextBtn(w.UI.Tema.T, b, w.UI.Tema.Icons["stolarski"], unit.Dp(48), w.UI.Tema.Colors["Light"], " "+t)
 		btn.CornerRadius = unit.Dp(0)
 		btn.TextSize = unit.Dp(12)
 		btn.Background = helper.HexARGB(w.UI.Tema.Colors["LightGrayII"])
+		for b.Clicked() {
+			f()
+			w.Strana = WingStrana{t, p}
+		}
 		return btn.Layout(gtx)
 	}
 }

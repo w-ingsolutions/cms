@@ -8,7 +8,6 @@ import (
 	"gioui.org/widget"
 	"gioui.org/widget/material"
 	"github.com/gioapp/gel/helper"
-	"github.com/w-ingsolutions/c/model"
 	"github.com/w-ingsolutions/c/pkg/lyt"
 )
 
@@ -17,7 +16,7 @@ type poljeSadrzaja struct {
 	Tip   string
 }
 
-func (w *WingCMS) noviTip() func() {
+func (w *WingCMS) podesavanjaTipa(tip TipSadrzajaPrikaz) func() {
 	return func() {
 		widgets := map[string]interface{}{
 			"naziv": &widget.Editor{
@@ -64,6 +63,22 @@ func (w *WingCMS) noviTip() func() {
 		strukturaLista := w.Prikaz.w["struktura"].(*layout.List)
 
 		struktura := []poljeSadrzaja{}
+		if tip.Struktura != nil {
+			struktura = tip.Struktura
+		}
+
+		if tip.Naziv != "" {
+			naziv.SetText(tip.Naziv)
+		}
+		if tip.NazivMnozina != "" {
+			nazivmnozina.SetText(tip.NazivMnozina)
+		}
+		if tip.Slug != "" {
+			slug.SetText(tip.Slug)
+		}
+		if tip.SlugMnozina != "" {
+			slugmnozina.SetText(tip.SlugMnozina)
+		}
 
 		w.Prikaz.e = []func(gtx C) D{
 			Editor(w.UI.Tema, naziv, layout.Vertical, "Naziv", func(e widget.EditorEvent) {}),
@@ -108,18 +123,20 @@ func (w *WingCMS) noviTip() func() {
 				//btn.Inset = layout.Inset{unit.Dp(8), unit.Dp(8), unit.Dp(10), unit.Dp(8)}
 				btn.Background = helper.HexARGB(w.UI.Tema.Colors["Secondary"])
 				for d.Clicked() {
-					noviTip := model.TipSadrzaja{
-						Struktura: new(model.WingObjekat),
-						Link:      new(widget.Clickable),
-					}
-					noviTip.Naziv = nazivmnozina.Text()
-					noviTip.NazivMnozina = nazivmnozina.Text()
-					noviTip.Slug = slug.Text()
-					noviTip.SlugMnozina = slugmnozina.Text()
+					//tip = TipSadrzajaPrikaz{
+					//	Struktura: new(model.WingObjekat),
+					//	Link:      new(widget.Clickable),
+					//}
+					tip.Naziv = naziv.Text()
+					tip.NazivMnozina = nazivmnozina.Text()
+					tip.Slug = slug.Text()
+					tip.SlugMnozina = slugmnozina.Text()
 
-					w.TipoviSadrzaja[noviTip.Slug] = noviTip
+					var ttip interface{} = tip
+
+					w.Podesavanja.TipoviSadrzaja[tip.Slug] = ttip.(TipSadrzaja)
 					w.tipoviSadrzajaPrikaz()
-					fmt.Println("ddd", noviTip)
+					fmt.Println("ddd", tip)
 				}
 				return btn.Layout(gtx)
 			},

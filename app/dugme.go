@@ -22,10 +22,11 @@ var (
 
 	noviTipDugme = new(widget.Clickable)
 
-	sveOdTipaSadrzajaDugme  = new(widget.Clickable)
-	dodajSadrzajDugme       = new(widget.Clickable)
-	kategorijeSadrzajaDugme = new(widget.Clickable)
-	oznakeSadrzajaDugme     = new(widget.Clickable)
+	sveOdTipaSadrzajaDugme   = new(widget.Clickable)
+	dodajSadrzajDugme        = new(widget.Clickable)
+	kategorijeSadrzajaDugme  = new(widget.Clickable)
+	oznakeSadrzajaDugme      = new(widget.Clickable)
+	podesavanjeSadrzajaDugme = new(widget.Clickable)
 )
 
 func (w *WingCMS) stranaDugme(b *widget.Clickable, f func(), t, p string) func(gtx C) D {

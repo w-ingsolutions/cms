@@ -15,20 +15,6 @@ import (
 )
 
 func main() {
-	//ctx, cancel := context.WithCancel(context.Background())
-	//defer cancel()
-	//crypto.MinRsaKeyBits = 1024
-	//ds, err := jdb.BadgerDatastore("test")
-	//if err != nil {
-	//	panic(err)
-	//}
-	//peer := jdb.GetPeer(ctx, ds)
-	//fmt.Println(string(content))
-	//var materijal model.WingMaterijal
-
-	//jdb.Read(ctx, peer, "QmPwhwbzPapHA3sA4UjD1m1Zw78pboQx6m9FyhK3cYN1dB", &materijal)
-	//fmt.Println("WingMaterijal", materijal)
-
 	w := cms.NewWingCMS()
 
 	if cfg.Initial {

@@ -1,29 +1,70 @@
 package cms
 
 import (
+	"bytes"
+	"encoding/gob"
+	"encoding/hex"
+	"fmt"
 	"gioui.org/app"
 	"gioui.org/text"
 	"gioui.org/unit"
 	"gioui.org/widget"
 	"github.com/gioapp/gel/counter"
 	"github.com/gioapp/gel/theme"
+	"github.com/marcetin/jdb"
 	wapp "github.com/w-ingsolutions/c/pkg/app"
 	"github.com/w-ingsolutions/c/pkg/icons"
-	"github.com/w-ingsolutions/cms/db"
-	"path/filepath"
+	"log"
 )
 
 func NewWingCMS() *WingCMS {
+	// initialize db options
+	opts := jdb.DefaultOptions
+	// Set PrivateKey. This should come from an ENV or a secret store in the real world
+	opts.PrivateKey, _ = hex.DecodeString("44667768254d593b7ea48c3327c18a651f6031554ca4f5e3e641f6ff1ea72e98")
+	db, err := jdb.Open(opts)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
 	w := &WingCMS{
 		Strana: WingStrana{"Komandna tabla", "komandna_tabla"},
-		Db:     db.DuoUIdbInit("BAZA"),
+		Db:     db,
 	}
-	w.Podesavanja = &WingPodesavanja{
-		Naziv: "Kalkulator",
-		Dir:   wapp.Dir("wing", false),
-		Cyr:   false,
+	p, err := db.Get("podesavanja")
+	checkError(err)
+	if p != nil {
+		read := bytes.NewReader(p)
+		dec := gob.NewDecoder(read) // Will read from network.
+
+		var podesavanja WingPodesavanja
+		err = dec.Decode(&podesavanja)
+		if err != nil {
+			log.Fatal("decode error:", err)
+		}
+		fmt.Println("Ima podesavanja")
+		w.Podesavanja = podesavanja
+	} else {
+		var write bytes.Buffer
+		podesavanja := WingPodesavanja{
+			Naziv:          "CMS",
+			Dir:            wapp.Dir("wing", false),
+			Cyr:            false,
+			TipoviSadrzaja: tipoviSadrzaja(),
+		}
+		//var read bytes.Buffer
+		enc := gob.NewEncoder(&write) // Will write to network.
+		// Encode (send) the value.
+		err = enc.Encode(podesavanja)
+		if err != nil {
+			log.Fatal("encode error:", err)
+		}
+
+		err = db.Set("podesavanja", write.Bytes())
+
+		fmt.Println("Nema podesavanja")
+		w.Podesavanja = podesavanja
 	}
-	w.Podesavanja.File = filepath.Join(w.Podesavanja.Dir, "conf.json")
 	w.UI = WingUI{
 		Tema: theme.NewDuoUItheme(),
 	}
@@ -31,12 +72,10 @@ func NewWingCMS() *WingCMS {
 		OK:     true,
 		Adresa: "https://wing.marcetin.com/",
 	}
-
 	w.UI.Window = app.NewWindow(
 		app.Size(unit.Dp(1280), unit.Dp(1024)),
-		app.Title("W-ing "),
+		app.Title(w.Podesavanja.Naziv),
 	)
-
 	counters := WingCounters{
 		Kolicina: &counter.DuoUIcounter{
 			Value:        1,
@@ -56,7 +95,8 @@ func NewWingCMS() *WingCMS {
 	w.UI.Counters = counters
 	w.UI.Tema.Icons = icons.NewWingUIicons()
 
-	w.TipoviSadrzaja = tipoviSadrzaja()
+	//w.Podesavanja.TipoviSadrzaja = tipoviSadrzaja()
+
 	//m := model.WingMaterijal{
 	//	Id:                2,
 	//	Naziv:             "Masa za španski zid",
@@ -94,3 +134,9 @@ func NewWingCMS() *WingCMS {
 //		w.Prikaz = w.Db.DbReadAll(t.SlugMnozina)
 //	}
 //}
+
+func checkError(err error) {
+	if err != nil {
+		fmt.Println("Fatal error ", err.Error())
+	}
+}

@@ -7,9 +7,9 @@ import (
 	"gioui.org/widget"
 	"github.com/gioapp/gel/counter"
 	"github.com/gioapp/gel/theme"
+	"github.com/marcetin/jdb"
 	"github.com/w-ingsolutions/c/model"
 	"github.com/w-ingsolutions/c/pkg/translate"
-	"github.com/w-ingsolutions/cms/db"
 )
 
 type (
@@ -24,12 +24,11 @@ var (
 type WingCMS struct {
 	Strana               WingStrana
 	EditPolja            *model.EditabilnaPoljaVrsteRadova
-	TipoviSadrzaja       map[string]model.TipSadrzaja
-	TipoviSadrzajaPrikaz []model.TipSadrzaja
-	Db                   *db.DuoUIdb
+	TipoviSadrzajaPrikaz []TipSadrzajaPrikaz
+	Db                   *jdb.JavazacDB
 	UI                   WingUI
 	API                  WingAPI
-	Podesavanja          *WingPodesavanja
+	Podesavanja          WingPodesavanja
 	Prikaz               prikaz
 }
 
@@ -61,10 +60,26 @@ type WingJezik struct {
 }
 
 type WingPodesavanja struct {
-	Naziv string
-	Dir   string
-	File  string
-	Cyr   bool
+	Naziv          string
+	Dir            string
+	File           string
+	Cyr            bool
+	TipoviSadrzaja map[string]TipSadrzaja
+}
+type TipSadrzaja struct {
+	Naziv        string
+	NazivMnozina string
+	Slug         string
+	SlugMnozina  string
+	Struktura    []poljeSadrzaja
+}
+type TipSadrzajaPrikaz struct {
+	Naziv        string
+	NazivMnozina string
+	Slug         string
+	SlugMnozina  string
+	Struktura    []poljeSadrzaja
+	Link         *widget.Clickable
 }
 
 type WingUloge struct {
