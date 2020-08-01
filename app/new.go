@@ -2,8 +2,8 @@ package cms
 
 import (
 	"bytes"
+	"context"
 	"encoding/gob"
-	"encoding/hex"
 	"fmt"
 	"gioui.org/app"
 	"gioui.org/text"
@@ -11,60 +11,50 @@ import (
 	"gioui.org/widget"
 	"github.com/gioapp/gel/counter"
 	"github.com/gioapp/gel/theme"
-	"github.com/marcetin/jdb"
-	wapp "github.com/w-ingsolutions/c/pkg/app"
+	shell "github.com/ipfs/go-ipfs-api"
+	"github.com/ipfs/go-log/v2"
 	"github.com/w-ingsolutions/c/pkg/icons"
-	"log"
 )
 
 func NewWingCMS() *WingCMS {
-	// initialize db options
-	opts := jdb.DefaultOptions
-	// Set PrivateKey. This should come from an ENV or a secret store in the real world
-	opts.PrivateKey, _ = hex.DecodeString("44667768254d593b7ea48c3327c18a651f6031554ca4f5e3e641f6ff1ea72e98")
-	db, err := jdb.Open(opts)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
+	log.SetLogLevel("*", "fatal")
+	ctx := context.Background()
 	w := &WingCMS{
 		Strana: WingStrana{"Komandna tabla", "komandna_tabla"},
-		Db:     db,
+		sh:     shell.NewShell("localhost:5001"),
+		ctx:    ctx,
 	}
-	p, err := db.Get("podesavanja")
+	p, err := w.sh.FilesLs(ctx, "/")
 	checkError(err)
-	if p != nil {
-		read := bytes.NewReader(p)
-		dec := gob.NewDecoder(read) // Will read from network.
-
-		var podesavanja WingPodesavanja
-		err = dec.Decode(&podesavanja)
-		if err != nil {
-			log.Fatal("decode error:", err)
+	//fmt.Println("ppp", p)
+	var wing bool
+	for _, l := range p {
+		if l.Name == "wing" {
+			wing = true
 		}
-		fmt.Println("Ima podesavanja")
-		w.Podesavanja = podesavanja
-	} else {
-		var write bytes.Buffer
-		podesavanja := WingPodesavanja{
-			Naziv:          "CMS",
-			Dir:            wapp.Dir("wing", false),
-			Cyr:            false,
-			TipoviSadrzaja: tipoviSadrzaja(),
-		}
-		//var read bytes.Buffer
-		enc := gob.NewEncoder(&write) // Will write to network.
-		// Encode (send) the value.
-		err = enc.Encode(podesavanja)
-		if err != nil {
-			log.Fatal("encode error:", err)
-		}
-
-		err = db.Set("podesavanja", write.Bytes())
-
-		fmt.Println("Nema podesavanja")
-		w.Podesavanja = podesavanja
 	}
+	if wing {
+		fmt.Println("Ima folder")
+		p, err := w.sh.FilesRead(ctx, w.Podesavanja.Dir+"/config")
+		checkError(err)
+		if p != nil {
+			checkError(err)
+			//read := bytes.NewReader(p)
+			dec := gob.NewDecoder(p) // Will read from network.
+			err = dec.Decode(&w.Podesavanja)
+			fmt.Println("Ima podesavanje")
+		} else {
+			fmt.Println("Nema podesavanje")
+			w.osnovnoPodesavanje()
+		}
+		checkError(err)
+	} else {
+		err := w.sh.FilesMkdir(ctx, w.Podesavanja.Dir)
+		checkError(err)
+		w.osnovnoPodesavanje()
+		fmt.Println("Nema podesavanja")
+	}
+
 	w.UI = WingUI{
 		Tema: theme.NewDuoUItheme(),
 	}
@@ -135,6 +125,20 @@ func NewWingCMS() *WingCMS {
 //	}
 //}
 
+func (w *WingCMS) osnovnoPodesavanje() {
+	w.Podesavanja = WingPodesavanja{
+		Naziv:          "CMS",
+		Dir:            "/wing",
+		Cyr:            false,
+		TipoviSadrzaja: tipoviSadrzaja(),
+	}
+	var network bytes.Buffer // Stand-in for the network.
+	// Create an encoder and send a value.
+	enc := gob.NewEncoder(&network)
+	err := enc.Encode(w.Podesavanja)
+	checkError(err)
+	err = w.sh.FilesWrite(w.ctx, w.Podesavanja.Dir+"/config", &network, shell.FilesWrite.Create(true))
+}
 func checkError(err error) {
 	if err != nil {
 		fmt.Println("Fatal error ", err.Error())

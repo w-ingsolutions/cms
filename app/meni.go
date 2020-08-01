@@ -8,6 +8,7 @@ import (
 	"github.com/gioapp/gel/helper"
 	"github.com/gioapp/gel/icontextbtn"
 	"github.com/w-ingsolutions/c/pkg/lyt"
+	"github.com/w-ingsolutions/cms/pkg/sadrzaj"
 )
 
 var (
@@ -57,25 +58,25 @@ func (w *WingCMS) Meni() func(gtx C) D {
 						return b
 					})
 				},
-				w.stranaDugme(noviTipDugme, w.podesavanjaTipa(TipSadrzajaPrikaz{}), "Dodaj Novi Tip", "novi_tip"),
+				w.stranaDugme(noviTipDugme, w.podesavanjaTipa(sadrzaj.TipSadrzajaPrikaz{}), "Dodaj Novi Tip", "novi_tip"),
 			)
 		})
 	}
 }
 
-func (w *WingCMS) LinkoviMenijaKlik(l TipSadrzajaPrikaz) {
+func (w *WingCMS) LinkoviMenijaKlik(l sadrzaj.TipSadrzajaPrikaz) {
 	for l.Link.Clicked() {
 		w.Strana = WingStrana{l.Naziv, l.SlugMnozina}
 		//w.Prikaz = w.Db.DbReadAll(l.SlugMnozina)
 	}
 }
 
-func (w *WingCMS) tipSadrzajaPodMeni(s TipSadrzajaPrikaz) func(gtx C) D {
+func (w *WingCMS) tipSadrzajaPodMeni(s sadrzaj.TipSadrzajaPrikaz) func(gtx C) D {
 	return func(gtx C) D {
 		return lyt.Format(gtx, "vflexb(middle,r(_),r(_),r(_),r(_),r(_))",
-			w.tipSadrzajaPodMeniDugme(sveOdTipaSadrzajaDugme, func() {}, "Sve od "+s.NazivMnozina, s.SlugMnozina),
-			w.tipSadrzajaPodMeniDugme(dodajSadrzajDugme, func() {}, "Dodaj novi"+s.Naziv, "novi"+s.Slug),
-			w.tipSadrzajaPodMeniDugme(kategorijeSadrzajaDugme, func() {}, "Kategorije", "kategorije"),
+			w.tipSadrzajaPodMeniDugme(sveOdTipaSadrzajaDugme, w.sveOdTipa(s), "Sve od "+s.NazivMnozina, s.SlugMnozina),
+			w.tipSadrzajaPodMeniDugme(dodajSadrzajDugme, w.sadrzaj(s.SlugMnozina, s.Struktura), "Dodaj novi "+s.Naziv, "novi_"+s.Slug),
+			w.tipSadrzajaPodMeniDugme(kategorijeSadrzajaDugme, w.kategorije(s), "Kategorije", "kategorije"),
 			w.tipSadrzajaPodMeniDugme(oznakeSadrzajaDugme, func() {}, "Oznake", "oznake"),
 			w.tipSadrzajaPodMeniDugme(podesavanjeSadrzajaDugme, w.podesavanjaTipa(s), "Podesavanja", "podesavanja"),
 		)

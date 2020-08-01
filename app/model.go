@@ -1,15 +1,17 @@
 package cms
 
 import (
+	"context"
 	"gioui.org/app"
 	"gioui.org/layout"
 	"gioui.org/op"
 	"gioui.org/widget"
 	"github.com/gioapp/gel/counter"
 	"github.com/gioapp/gel/theme"
-	"github.com/marcetin/jdb"
+	shell "github.com/ipfs/go-ipfs-api"
 	"github.com/w-ingsolutions/c/model"
 	"github.com/w-ingsolutions/c/pkg/translate"
+	"github.com/w-ingsolutions/cms/pkg/sadrzaj"
 )
 
 type (
@@ -24,8 +26,9 @@ var (
 type WingCMS struct {
 	Strana               WingStrana
 	EditPolja            *model.EditabilnaPoljaVrsteRadova
-	TipoviSadrzajaPrikaz []TipSadrzajaPrikaz
-	Db                   *jdb.JavazacDB
+	TipoviSadrzajaPrikaz []sadrzaj.TipSadrzajaPrikaz
+	sh                   *shell.Shell
+	ctx                  context.Context
 	UI                   WingUI
 	API                  WingAPI
 	Podesavanja          WingPodesavanja
@@ -64,22 +67,7 @@ type WingPodesavanja struct {
 	Dir            string
 	File           string
 	Cyr            bool
-	TipoviSadrzaja map[string]TipSadrzaja
-}
-type TipSadrzaja struct {
-	Naziv        string
-	NazivMnozina string
-	Slug         string
-	SlugMnozina  string
-	Struktura    []poljeSadrzaja
-}
-type TipSadrzajaPrikaz struct {
-	Naziv        string
-	NazivMnozina string
-	Slug         string
-	SlugMnozina  string
-	Struktura    []poljeSadrzaja
-	Link         *widget.Clickable
+	TipoviSadrzaja map[string]sadrzaj.TipSadrzaja
 }
 
 type WingUloge struct {
