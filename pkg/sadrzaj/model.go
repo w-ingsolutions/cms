@@ -6,7 +6,7 @@ import (
 )
 
 type Sadrzaj struct {
-	ID         string
+	ID         int
 	CID        cid.Cid
 	Kategorija string
 	Struktura  map[string]PoljeSadrzaja
@@ -19,6 +19,7 @@ type PoljeSadrzaja struct {
 }
 
 type Kategorija struct {
+	ID     int
 	Naziv  string
 	Opis   string
 	Slug   string

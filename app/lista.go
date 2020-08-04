@@ -16,17 +16,3 @@ func (w *WingCMS) lista() func(gtx C) D {
 		})
 	}
 }
-
-//func (w *WingCMS) sveOdTipa() {
-//	sadrzaj := w.Prikaz[i]
-//	return lyt.Format(gtx, "hflexb(middle,r(_),f(0.1,_),f(0.9,_),r(_))",
-//		w.akcijaDugme(sadrzaj.Izmena, "Run"),
-//		func(gtx C) D {
-//			return material.Body1(w.UI.Tema.T, fmt.Sprint(sadrzaj.Id)).Layout(gtx)
-//		},
-//		func(gtx C) D {
-//			return material.Body1(w.UI.Tema.T, sadrzaj.Naziv).Layout(gtx)
-//		},
-//		w.akcijaDugme(sadrzaj.Brisanje, "Delete"),
-//	)
-//}

@@ -1,4 +1,4 @@
-package materijal
+package osnovna
 
 import (
 	"github.com/w-ingsolutions/cms/pkg/sadrzaj"
@@ -7,7 +7,7 @@ import (
 func NewMaterijali() []sadrzaj.Sadrzaj {
 	return []sadrzaj.Sadrzaj{
 		sadrzaj.Sadrzaj{
-			ID: "1",
+			ID: 1,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", " 1"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Glet masa-gletokol"},
@@ -26,7 +26,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		sadrzaj.Sadrzaj{
-			ID: "2",
+			ID: 2,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", " 2"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Masa za španski zid"},
@@ -45,7 +45,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		sadrzaj.Sadrzaj{
-			ID: "3",
+			ID: 3,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", " 3"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Bavalit fasada"},
@@ -64,7 +64,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		sadrzaj.Sadrzaj{
-			ID: "4",
+			ID: 4,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", " 4"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Fasada hirofa"},
@@ -83,7 +83,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		sadrzaj.Sadrzaj{
-			ID: "5",
+			ID: 5,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", " 5"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Lepak za siporeks blokove"},
@@ -102,7 +102,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		sadrzaj.Sadrzaj{
-			ID: "6",
+			ID: 6,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", " 6"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Lepak za keramičke pločice Pk-111"},
@@ -121,7 +121,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		sadrzaj.Sadrzaj{
-			ID: "7",
+			ID: 7,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", " 7"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Lepak za stiropor"},
@@ -140,7 +140,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		sadrzaj.Sadrzaj{
-			ID: "8",
+			ID: 8,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", " 8"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Lepak za kamenu vunu"},
@@ -159,7 +159,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		sadrzaj.Sadrzaj{
-			ID: "9",
+			ID: 9,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", " 9"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Lepak za kamen vajt (beli)"},
@@ -178,7 +178,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		sadrzaj.Sadrzaj{
-			ID: "10",
+			ID: 10,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", "10"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Lepak za keramiku Pk-116"},
@@ -197,7 +197,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		sadrzaj.Sadrzaj{
-			ID: "11",
+			ID: 11,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", "11"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Glet masa spoljna"},
@@ -216,7 +216,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		sadrzaj.Sadrzaj{
-			ID: "12",
+			ID: 12,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", "12"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Mašinski malter krečno-cementni"},
@@ -235,7 +235,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		sadrzaj.Sadrzaj{
-			ID: "13",
+			ID: 13,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", "13"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Glet masa"},
@@ -254,7 +254,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		sadrzaj.Sadrzaj{
-			ID: "14",
+			ID: 14,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", "14"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Građevinski lepak"},
@@ -273,7 +273,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		sadrzaj.Sadrzaj{
-			ID: "15",
+			ID: 15,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", "15"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Spoljni mašinski malter-cementni"},
@@ -292,7 +292,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		//sadrzaj.Sadrzaj{
-		//	ID: "16",
+		//	ID: 16,
 		//	Struktura: map[string]sadrzaj.PoljeSadrzaja{
 		//		"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", "16"},
 		//		"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "PK POL"},
@@ -311,7 +311,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 		//	},
 		//},
 		sadrzaj.Sadrzaj{
-			ID: "17",
+			ID: 17,
 			Struktura: map[string]sadrzaj.PoljeSadrzaja{
 				"Id":                sadrzaj.PoljeSadrzaja{"Id", "Text", "17"},
 				"Naziv":             sadrzaj.PoljeSadrzaja{"Naziv", "Text", "PK DSP"},
@@ -330,7 +330,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 			},
 		},
 		//sadrzaj.Sadrzaj{
-		//	ID: "18",
+		//	ID: 18,
 		//	Struktura: map[string]sadrzaj.PoljeSadrzaja{
 		//		"Id": sadrzaj.PoljeSadrzaja{"Id", "Text", "18"},
 		//		"Naziv": sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Mašinski malter rinfuz"},
@@ -349,7 +349,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 		//	},
 		//},
 		//sadrzaj.Sadrzaj{
-		//	ID: "19",
+		//	ID: 19,
 		//	Struktura: map[string]sadrzaj.PoljeSadrzaja{
 		//		"Id": sadrzaj.PoljeSadrzaja{"Id", "Text", "19"},
 		//		"Naziv": sadrzaj.PoljeSadrzaja{"Naziv", "Text", "PK-kulir"},
@@ -368,7 +368,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 		//	},
 		//},
 		//sadrzaj.Sadrzaj{
-		//	ID: "20",
+		//	ID: 20,
 		//	Struktura: map[string]sadrzaj.PoljeSadrzaja{
 		//		"Id": sadrzaj.PoljeSadrzaja{"Id", "Text", "20"},
 		//		"Naziv": sadrzaj.PoljeSadrzaja{"Naziv", "Text", "PK AKRIL"},
@@ -387,7 +387,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 		//	},
 		//},
 		//sadrzaj.Sadrzaj{
-		//	ID: "21",
+		//	ID: 21,
 		//	Struktura: map[string]sadrzaj.PoljeSadrzaja{
 		//		"Id": sadrzaj.PoljeSadrzaja{"Id", "Text", "21"},
 		//		"Naziv": sadrzaj.PoljeSadrzaja{"Naziv", "Text", "PK-PLAST"},
@@ -406,7 +406,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 		//	},
 		//},
 		//sadrzaj.Sadrzaj{
-		//	ID: "22",
+		//	ID: 22,
 		//	Struktura: map[string]sadrzaj.PoljeSadrzaja{
 		//		"Id": sadrzaj.PoljeSadrzaja{"Id", "Text", "22"},
 		//		"Naziv": sadrzaj.PoljeSadrzaja{"Naziv", "Text", "Lepak za kamen sivi"},
@@ -425,7 +425,7 @@ func NewMaterijali() []sadrzaj.Sadrzaj {
 		//	},
 		//},
 		//sadrzaj.Sadrzaj{
-		//	ID: "23",
+		//	ID: 23,
 		//	Struktura: map[string]sadrzaj.PoljeSadrzaja{
 		//		"Id": sadrzaj.PoljeSadrzaja{"Id", "Text", "23"},
 		//		"Naziv": sadrzaj.PoljeSadrzaja{"Naziv", "Text", "PK-FAS"},

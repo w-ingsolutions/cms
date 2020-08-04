@@ -42,11 +42,7 @@ func loop(w *cms.WingCMS) error {
 				w.UI.Context = layout.NewContext(&w.UI.Ops, e)
 				helper.Fill(w.UI.Context, helper.HexARGB(w.UI.Tema.Colors["Light"]))
 
-				if !w.API.OK {
-					//w.GreskaEkran()
-				} else {
-					w.GlavniEkran(w.UI.Context)
-				}
+				w.GlavniEkran(w.UI.Context)
 
 				e.Frame(w.UI.Context.Ops)
 			}

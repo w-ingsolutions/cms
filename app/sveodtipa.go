@@ -1,12 +1,11 @@
 package cms
 
 import (
-	"encoding/gob"
 	"fmt"
 	"gioui.org/widget"
 	"gioui.org/widget/material"
 	"github.com/w-ingsolutions/c/pkg/lyt"
-	"github.com/w-ingsolutions/cms/BAZA/materijal"
+	osnovna "github.com/w-ingsolutions/cms/DEF"
 	"github.com/w-ingsolutions/cms/pkg/sadrzaj"
 )
 
@@ -15,9 +14,9 @@ func (w *WingCMS) sveOdTipa(tip sadrzaj.TipSadrzajaPrikaz) func() {
 		widgets := make(map[string]interface{})
 		prikazLista := []func(gtx C) D{}
 		if tip.SlugMnozina == "materijali" {
-			files := materijal.NewMaterijali()
+			files := osnovna.NewMaterijali()
 			for _, sadrzajFiles := range files {
-				widgets[sadrzajFiles.ID] = new(widget.Clickable)
+				widgets[fmt.Sprint(sadrzajFiles.ID)] = new(widget.Clickable)
 				fmt.Println("sadrzajFiles.ID", sadrzajFiles.ID)
 			}
 			w.Prikaz.w = widgets
@@ -30,38 +29,38 @@ func (w *WingCMS) sveOdTipa(tip sadrzaj.TipSadrzajaPrikaz) func() {
 		}
 
 		if tip.SlugMnozina == "radovi" {
-			files := materijal.NewRadovi()
+			files := osnovna.NewRadovi()
 			for _, sadrzajFiles := range files {
-				widgets[sadrzajFiles.Kategorija+"_"+sadrzajFiles.ID] = new(widget.Clickable)
-				fmt.Println("sadrzajFiles>>>>>", sadrzajFiles.Kategorija+"_"+sadrzajFiles.ID)
+				widgets[sadrzajFiles.Kategorija+"_"+fmt.Sprint(sadrzajFiles.ID)] = new(widget.Clickable)
+				fmt.Println("sadrzajFiles>>>>>", sadrzajFiles.Kategorija+"_"+fmt.Sprint(sadrzajFiles.ID))
 			}
 			w.Prikaz.w = widgets
 			for _, row := range files {
 				var r sadrzaj.Sadrzaj
 				r = row
 				sl := r.Struktura["Slug"].Sadrzaj.(string)
-				prikazLista = append(prikazLista, w.rowList(r.Struktura, w.Prikaz.w[sl].(*widget.Clickable), tip.SlugMnozina, r.Struktura["Naziv"].Sadrzaj.(string), sl))
+
+				prikazLista = append(prikazLista, w.rowList(r.Struktura, sadrzajDugme, tip.SlugMnozina, r.Struktura["Naziv"].Sadrzaj.(string), sl))
 				fmt.Println("slslsl::::::::::::", sl)
 			}
 		}
-
-		if tip.SlugMnozina != "materijali" && tip.SlugMnozina != "radovi" {
-			files, err := w.sh.FilesLs(w.ctx, w.Podesavanja.Dir+"/"+tip.SlugMnozina)
-			checkError(err)
-			for _, sadrzajFiles := range files {
-				widgets[sadrzajFiles.Name] = new(widget.Clickable)
-			}
-			w.Prikaz.w = widgets
-			for _, row := range files {
-				file, err := w.sh.FilesRead(w.ctx, w.Podesavanja.Dir+"/"+tip.SlugMnozina+"/"+row.Name)
-				checkError(err)
-				var s sadrzaj.Sadrzaj
-				dec := gob.NewDecoder(file)
-				err = dec.Decode(&s)
-				checkError(err)
-				prikazLista = append(prikazLista, w.rowList(s.Struktura, sadrzajDugme, tip.SlugMnozina, s.Struktura["Naziv"].Sadrzaj.(string), s.Struktura["Slug"].Sadrzaj.(string)))
-			}
-		}
+		//if tip.SlugMnozina != "materijali" && tip.SlugMnozina != "radovi" {
+		//	files, err := w.sh.FilesLs(w.ctx, w.Podesavanja.Dir+"/"+tip.SlugMnozina)
+		//	checkError(err)
+		//	for _, sadrzajFiles := range files {
+		//		widgets[sadrzajFiles.Name] = new(widget.Clickable)
+		//	}
+		//	w.Prikaz.w = widgets
+		//	for _, row := range files {
+		//		file, err := w.sh.FilesRead(w.ctx, w.Podesavanja.Dir+"/"+tip.SlugMnozina+"/"+row.Name)
+		//		checkError(err)
+		//		var s sadrzaj.Sadrzaj
+		//		dec := gob.NewDecoder(file)
+		//		err = dec.Decode(&s)
+		//		checkError(err)
+		//		prikazLista = append(prikazLista, w.rowList(s.Struktura, sadrzajDugme, tip.SlugMnozina, s.Struktura["Naziv"].Sadrzaj.(string), s.Struktura["Slug"].Sadrzaj.(string)))
+		//	}
+		//}
 		w.Prikaz.e = prikazLista
 	}
 }
