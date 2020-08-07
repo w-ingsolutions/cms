@@ -1,6 +1,7 @@
 package cms
 
 import (
+	"context"
 	"gioui.org/layout"
 	"gioui.org/unit"
 	"gioui.org/widget"
@@ -8,8 +9,9 @@ import (
 	"github.com/gioapp/gel/helper"
 	"github.com/gioapp/gel/icontextbtn"
 	"github.com/gioapp/gel/theme"
+	shell "github.com/ipfs/go-ipfs-api"
 	"github.com/w-ingsolutions/c/pkg/lyt"
-	"github.com/w-ingsolutions/cms/pkg/sadrzaj"
+	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
 var (
@@ -24,7 +26,7 @@ var (
 	}
 )
 
-func Meni(th *theme.DuoUItheme, tipoviSadrzajaPrikaz []content.TypePrikaz, slug string) func(gtx C) D {
+func Meni(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, t map[string]φ.T, tipoviSadrzajaPrikaz []φ.ContentType, slug string) func(gtx C) D {
 	return func(gtx C) D {
 		return container.DuoUIcontainer(th, 4, th.Colors["DarkGrayI"]).Layout(gtx, layout.N, func(gtx C) D {
 			gtx.Constraints.Max.X = 180
@@ -42,7 +44,7 @@ func Meni(th *theme.DuoUItheme, tipoviSadrzajaPrikaz []content.TypePrikaz, slug 
 						btn.TextSize = unit.Dp(16)
 						btn.CornerRadius = unit.Dp(0)
 						btn.Background = helper.HexARGB(th.Colors["Gray"])
-						LinkoviMenijaKlik(w, tipSadrzaja)
+						LinkoviMenijaKlik(tipSadrzaja)
 						b := lyt.Format(gtx, "vflexb(middle,r(_))",
 							func(gtx C) D {
 								return btn.Layout(gtx)
@@ -53,21 +55,21 @@ func Meni(th *theme.DuoUItheme, tipoviSadrzajaPrikaz []content.TypePrikaz, slug 
 								func(gtx C) D {
 									return btn.Layout(gtx)
 								},
-								tipSadrzajaPodMeni(th, tipSadrzaja),
+								tipSadrzajaPodMeni(ctx, sh, th, t, tipSadrzaja),
 							)
 						}
 						return b
 					})
 				},
-				stranaDugme(th, noviTipDugme, w.podesavanjaTipa(content.TypePrikaz{}), "Dodaj Novi Tip", "novi_tip"),
+				stranaDugme(th, noviTipDugme, podesavanjaTipa(ctx, sh, th, t, φ.ContentType{}), "Dodaj Novi Tip", "novi_tip"),
 			)
 		})
 	}
 }
 
-func LinkoviMenijaKlik(w *WingCMS, l content.TypePrikaz) {
+func LinkoviMenijaKlik(l φ.ContentType) {
 	for l.Link.Clicked() {
-		strana = WingStrana{l.Title, l.SlugPlural}
+		currentPage = Page{l.Title, l.SlugPlural}
 		//w.Prikaz = w.Db.DbReadAll(l.SlugPlural)
 	}
 	return
@@ -75,15 +77,15 @@ func LinkoviMenijaKlik(w *WingCMS, l content.TypePrikaz) {
 
 //Strana               WingStrana
 //EditPolja            *model.EditabilnaPoljaVrsteRadova
-//TipoviSadrzajaPrikaz []content.TypePrikaz
-func tipSadrzajaPodMeni(th *theme.DuoUItheme, s content.TypePrikaz) func(gtx C) D {
+//TipoviSadrzajaPrikaz []φ.T
+func tipSadrzajaPodMeni(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, t map[string]φ.T, s φ.ContentType) func(gtx C) D {
 	return func(gtx C) D {
 		return lyt.Format(gtx, "vflexb(middle,r(_),r(_),r(_),r(_),r(_))",
-			tipSadrzajaPodMeniDugme(th, sveOdTipaSadrzajaDugme, w.sveOdTipa(s), "Sve od "+s.TitlePlural, s.SlugPlural),
-			tipSadrzajaPodMeniDugme(th, dodajSadrzajDugme, w.sadrzaj(s.SlugPlural, s.Struct), "Dodaj novi "+s.Title, "novi_"+s.Slug),
-			tipSadrzajaPodMeniDugme(th, kategorijeSadrzajaDugme, w.kategorije(s), "Kategorije "+s.TitlePlural, "kategorije_"+s.SlugPlural),
+			tipSadrzajaPodMeniDugme(th, sveOdTipaSadrzajaDugme, sveOdTipa(ctx, sh, th, s), "Sve od "+s.TitlePlural, s.SlugPlural),
+			tipSadrzajaPodMeniDugme(th, dodajSadrzajDugme, φΦφ(ctx, sh, th, s.SlugPlural, s.Struct), "Dodaj novi "+s.Title, "novi_"+s.Slug),
+			tipSadrzajaPodMeniDugme(th, kategorijeSadrzajaDugme, categories(th, s), "Kategorije "+s.TitlePlural, "kategorije_"+s.SlugPlural),
 			tipSadrzajaPodMeniDugme(th, oznakeSadrzajaDugme, func() {}, "Oznake "+s.TitlePlural, "oznake_"+s.SlugPlural),
-			tipSadrzajaPodMeniDugme(th, podesavanjeSadrzajaDugme, w.podesavanjaTipa(s), "Podesavanja "+s.TitlePlural, "podesavanja_"+s.SlugPlural),
+			tipSadrzajaPodMeniDugme(th, podesavanjeSadrzajaDugme, podesavanjaTipa(ctx, sh, th, t, s), "Podesavanja "+s.TitlePlural, "podesavanja_"+s.SlugPlural),
 		)
 	}
 }
@@ -96,7 +98,7 @@ func tipSadrzajaPodMeniDugme(th *theme.DuoUItheme, b *widget.Clickable, f func()
 		btn.Background = helper.HexARGB(th.Colors["LightGrayII"])
 		for b.Clicked() {
 			f()
-			strana = WingStrana{t, p}
+			currentPage = Page{t, p}
 		}
 		return btn.Layout(gtx)
 	}

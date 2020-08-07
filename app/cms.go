@@ -2,33 +2,27 @@ package cms
 
 import (
 	"gioui.org/layout"
-	"gioui.org/text"
-	"gioui.org/widget/material"
 	"github.com/w-ingsolutions/c/pkg/lyt"
 	"github.com/w-ingsolutions/cms/pkg/utl"
+	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
 var (
 	prikaz prikazElementi
+
+	currentPage          = Page{}
+	podesavanja          WingPodesavanja
+	tipoviSadrzajaPrikaz []φ.ContentType
 )
 
 func (w *WingCMS) GlavniEkran(gtx layout.Context) {
 	lyt.Format(gtx, "hflexb(start,r(_),f(1,_))",
-		Meni(w.UI.Tema, w.TipoviSadrzajaPrikaz, w.Strana.Slug),
+		Meni(w.ctx, w.sh, w.UI.Tema, w.tipoviSadrzaja, tipoviSadrzajaPrikaz, currentPage.Slug),
 		func(gtx C) D {
 			return lyt.Format(gtx, "vflexb(start,r(_),f(1,_),r(_))",
 				header(w),
-				utl.Strana(w.UI.Tema, w.lista(), w.Strana.Title),
-				footer(w),
+				utl.Strana(w.UI.Tema, w.lista(), currentPage.Title),
+				footer(w.UI.Tema),
 			)
 		})
-}
-
-func (w *WingCMS) sumaFooter(t string) func(gtx C) D {
-	return func(gtx C) D {
-		gtx.Constraints.Min.X = gtx.Constraints.Max.X
-		suma := material.Body2(w.UI.Tema.T, t)
-		suma.Alignment = text.End
-		return suma.Layout(gtx)
-	}
 }

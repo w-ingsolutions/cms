@@ -7,39 +7,40 @@ import (
 	"gioui.org/widget/material"
 	"github.com/gioapp/gel/container"
 	"github.com/gioapp/gel/helper"
+	"github.com/gioapp/gel/theme"
 	"github.com/w-ingsolutions/c/pkg/lyt"
 )
 
-func footer(w *WingCMS) func(gtx C) D {
+func footer(th *theme.DuoUItheme) func(gtx C) D {
 	return func(gtx C) D {
-		return container.DuoUIcontainer(w.UI.Tema, 4, w.UI.Tema.Colors["DarkGrayI"]).Layout(gtx, layout.Center, func(gtx C) D {
+		return container.DuoUIcontainer(th, 4, th.Colors["DarkGrayI"]).Layout(gtx, layout.Center, func(gtx C) D {
 			gtx.Constraints.Min.X = gtx.Constraints.Max.X
 			return lyt.Format(gtx, "hflexb(middle,r(_),r(_),r(_))",
-				w.iconLink(podesavanjeDugme, "settingsIcon", func() {
-					w.Strana = WingStrana{"Podesavanja", "podesavanja"}
+				iconLink(th, podesavanjeDugme, "settingsIcon", func() {
+					currentPage = Page{"Podesavanja", "podesavanja"}
 				}),
-				w.iconLink(pomocDugme, "settingsIcon", func() {
-					w.Strana = WingStrana{"Pomoc", "pomoc"}
+				iconLink(th, pomocDugme, "settingsIcon", func() {
+					currentPage = Page{"Pomoc", "pomoc"}
 				}),
-				w.footerMenu())
+				footerMenu(th))
 		})
 	}
 }
 
-func (w *WingCMS) footerMenu() func(gtx C) D {
+func footerMenu(th *theme.DuoUItheme) func(gtx C) D {
 	return func(gtx C) D {
 		return lyt.Format(gtx, "hflexb(middle,r(_),r(_))",
-			helper.DuoUIline(true, 0, 2, 2, w.UI.Tema.Colors["DarkGrayI"]),
-			w.stranaDugme(materijalDugme, func() {}, "MATERIJAL", "materijal"),
+			helper.DuoUIline(true, 0, 2, 2, th.Colors["DarkGrayI"]),
+			stranaDugme(th, materijalDugme, func() {}, "MATERIJAL", "materijal"),
 		)
 	}
 }
 
-func (w *WingCMS) iconLink(b *widget.Clickable, i string, f func()) func(gtx C) D {
+func iconLink(th *theme.DuoUItheme, b *widget.Clickable, i string, f func()) func(gtx C) D {
 	return func(gtx C) D {
 		return layout.Center.Layout(gtx, func(gtx C) D {
-			btn := material.IconButton(w.UI.Tema.T, b, w.UI.Tema.Icons[i])
-			btn.Color = helper.HexARGB(w.UI.Tema.Colors["Danger"])
+			btn := material.IconButton(th.T, b, th.Icons[i])
+			btn.Color = helper.HexARGB(th.Colors["Danger"])
 			btn.Size = unit.Dp(16)
 			btn.Inset = layout.Inset{
 				Top:    unit.Dp(4),
@@ -47,7 +48,7 @@ func (w *WingCMS) iconLink(b *widget.Clickable, i string, f func()) func(gtx C) 
 				Bottom: unit.Dp(4),
 				Left:   unit.Dp(4),
 			}
-			btn.Background = helper.HexARGB(w.UI.Tema.Colors["White"])
+			btn.Background = helper.HexARGB(th.Colors["White"])
 			for b.Clicked() {
 				f()
 			}

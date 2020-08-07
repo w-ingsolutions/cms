@@ -40,7 +40,7 @@ func stranaDugme(th *theme.DuoUItheme, b *widget.Clickable, f func(), t, p strin
 		btn.Background = helper.HexARGB(th.Colors["Secondary"])
 		for b.Clicked() {
 			f()
-			strana = WingStrana{t, p}
+			currentPage = Page{t, p}
 		}
 		return btn.Layout(gtx)
 	}

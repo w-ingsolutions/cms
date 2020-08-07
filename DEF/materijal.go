@@ -1,30 +1,30 @@
 package osnovna
 
 import (
-	"github.com/w-ingsolutions/cms/pkg/content"
-	"github.com/w-ingsolutions/cms/pkg/sadrzaj"
+	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
-func Materijal() content.Type {
-	return content.Type{
+func Materijal() φ.T {
+	return φ.T{
 		Title:       "Materijal",
 		TitlePlural: "Materijali",
 		Slug:        "materijal",
 		SlugPlural:  "materijali",
-		Struct: map[string]content.Field{
-			"Title":             content.Field{"Title", "Text", ""},
-			"Opis":              content.Field{"Opis", "Text", ""},
-			"Obracun":           content.Field{"Obracun", "Text", ""},
-			"Proizvodjac":       content.Field{"Proizvodjac", "Text", ""},
-			"OsobineNamena":     content.Field{"OsobineNamena", "Text", ""},
-			"NacinRada":         content.Field{"NacinRada", "Text", ""},
-			"JedinicaPotrosnje": content.Field{"JedinicaPotrosnje", "Text", ""},
-			"Potrosnja":         content.Field{"Potrosnja", "Num", ""},
-			"RokUpotrebe":       content.Field{"RokUpotrebe", "Text", ""},
-			"Jedinica":          content.Field{"Jedinica", "Text", ""},
-			"Pakovanje":         content.Field{"Pakovanje", "Num", ""},
-			"Cena":              content.Field{"Cena", "Num", ""},
-			"Slug":              content.Field{"Slug", "Text", ""},
+		Struct: map[string]φ.F{
+			"Id":                φ.F{"Id", "Text", ""},
+			"Title":             φ.F{"Title", "Text", ""},
+			"Opis":              φ.F{"Opis", "Text", ""},
+			"Obracun":           φ.F{"Obracun", "Text", ""},
+			"Proizvodjac":       φ.F{"Proizvodjac", "Text", ""},
+			"OsobineNamena":     φ.F{"OsobineNamena", "Text", ""},
+			"NacinRada":         φ.F{"NacinRada", "Text", ""},
+			"JedinicaPotrosnje": φ.F{"JedinicaPotrosnje", "Text", ""},
+			"Potrosnja":         φ.F{"Potrosnja", "Num", ""},
+			"RokUpotrebe":       φ.F{"RokUpotrebe", "Text", ""},
+			"Jedinica":          φ.F{"Jedinica", "Text", ""},
+			"Pakovanje":         φ.F{"Pakovanje", "Num", ""},
+			"Cena":              φ.F{"Cena", "Num", ""},
+			"Slug":              φ.F{"Slug", "Text", ""},
 		},
 		//Link:         new(widget.Clickable),
 	}

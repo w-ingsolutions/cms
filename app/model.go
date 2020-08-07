@@ -5,13 +5,11 @@ import (
 	"gioui.org/app"
 	"gioui.org/layout"
 	"gioui.org/op"
-	"gioui.org/widget"
 	"github.com/gioapp/gel/counter"
 	"github.com/gioapp/gel/theme"
 	shell "github.com/ipfs/go-ipfs-api"
 	"github.com/w-ingsolutions/c/model"
-	"github.com/w-ingsolutions/c/pkg/translate"
-	"github.com/w-ingsolutions/cms/pkg/sadrzaj"
+	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
 type (
@@ -24,14 +22,13 @@ var (
 )
 
 type WingCMS struct {
-	Strana               WingStrana
-	EditPolja            *model.EditabilnaPoljaVrsteRadova
-	TipoviSadrzajaPrikaz []content.TypePrikaz
-	sh                   *shell.Shell
-	ctx                  context.Context
-	UI                   WingUI
-	API                  WingAPI
-	Podesavanja          WingPodesavanja
+	EditPolja *model.EditabilnaPoljaVrsteRadova
+	//TipoviSadrzajaPrikaz []φ.ContentType
+	sh             *shell.Shell
+	ctx            context.Context
+	UI             WingUI
+	API            WingAPI
+	tipoviSadrzaja map[string]φ.T
 }
 
 type prikazElementi struct {
@@ -54,19 +51,10 @@ type WingAPI struct {
 	Adresa string
 }
 
-type WingJezik struct {
-	t        translate.Translation
-	izabrani string
-	dostupni []string
-	linkovi  map[string]*widget.Clickable
-}
-
 type WingPodesavanja struct {
-	Title          string
-	Dir            string
-	File           string
-	Cyr            bool
-	TipoviSadrzaja map[string]content.Type
+	Title string
+	Dir   string
+	File  string
 }
 
 type WingUloge struct {
@@ -79,7 +67,7 @@ type WingCounters struct {
 	Materijal *counter.DuoUIcounter
 }
 
-type WingStrana struct {
+type Page struct {
 	Title string
 	Slug  string
 }

@@ -16,42 +16,44 @@ import (
 	"github.com/w-ingsolutions/c/pkg/icons"
 )
 
-func NewWingCMS() *WingCMS {
+func NewWingCMS(settings WingPodesavanja) *WingCMS {
+	podesavanja = settings
 	log.SetLogLevel("*", "fatal")
 	ctx := context.Background()
+	//currentPage = Page{"Komandna tabla", "komandna_tabla"}
 	w := &WingCMS{
-		Strana: WingStrana{"Komandna tabla", "komandna_tabla"},
-		sh:     shell.NewShell("localhost:5001"),
-		ctx:    ctx,
+		sh:  shell.NewShell("localhost:5001"),
+		ctx: ctx,
 	}
 	p, err := w.sh.FilesLs(ctx, "/")
 	checkError(err)
-	//fmt.Println("ppp", p)
 	var wing bool
 	for _, l := range p {
-		if l.Name == "wing" {
+		if l.Name == "/"+podesavanja.Dir {
 			wing = true
 		}
+		fmt.Println("lllllllllllllllllllllllll", l)
+
 	}
 	if wing {
 		fmt.Println("Ima folder")
-		p, err := w.sh.FilesRead(ctx, w.Podesavanja.Dir+"/config")
+		p, err := w.sh.FilesRead(ctx, "/"+podesavanja.Dir+"/φ")
 		checkError(err)
 		if p != nil {
 			checkError(err)
 			//read := bytes.NewReader(p)
-			dec := gob.NewDecoder(p) // Will read from network.
-			err = dec.Decode(&w.Podesavanja)
+			dec := gob.NewDecoder(p)
+			err = dec.Decode(&podesavanja)
 			fmt.Println("Ima podesavanje")
 		} else {
 			fmt.Println("Nema podesavanje")
-			w.osnovnoPodesavanje()
+			w.osnovnoPodesavanje(podesavanja)
 		}
 		checkError(err)
 	} else {
-		err := w.sh.FilesMkdir(ctx, w.Podesavanja.Dir)
+		err := w.sh.FilesMkdir(ctx, "/"+podesavanja.Dir)
 		checkError(err)
-		w.osnovnoPodesavanje()
+		w.osnovnoPodesavanje(podesavanja)
 		fmt.Println("Nema podesavanja")
 	}
 
@@ -60,7 +62,7 @@ func NewWingCMS() *WingCMS {
 	}
 	w.UI.Window = app.NewWindow(
 		app.Size(unit.Dp(1280), unit.Dp(1024)),
-		app.Title(w.Podesavanja.Title),
+		app.Title("podesavanja.Title"),
 	)
 	counters := WingCounters{
 		Kolicina: &counter.DuoUIcounter{
@@ -88,7 +90,7 @@ func NewWingCMS() *WingCMS {
 	//
 	//}
 	//w.Db.DB.Write(bytesBuf.Bytes())
-	w.tipoviSadrzajaPrikaz()
+	displayTypes(w.tipoviSadrzaja)
 
 	return w
 }
@@ -100,19 +102,16 @@ func NewWingCMS() *WingCMS {
 //	}
 //}
 
-func (w *WingCMS) osnovnoPodesavanje() {
-	w.Podesavanja = WingPodesavanja{
-		Title:          "CMS",
-		Dir:            "/wing",
-		Cyr:            false,
-		TipoviSadrzaja: tipoviSadrzaja(),
-	}
-	var network bytes.Buffer // Stand-in for the network.
-	// Create an encoder and send a value.
+func (w *WingCMS) osnovnoPodesavanje(podesavanja WingPodesavanja) {
+
+	w.tipoviSadrzaja = CreateContentTypes()
+
+	var network bytes.Buffer
+	//Create an encoder and send a value.
 	enc := gob.NewEncoder(&network)
-	err := enc.Encode(w.Podesavanja)
+	err := enc.Encode(podesavanja)
 	checkError(err)
-	err = w.sh.FilesWrite(w.ctx, w.Podesavanja.Dir+"/config", &network, shell.FilesWrite.Create(true))
+	err = w.sh.FilesWrite(w.ctx, "/"+podesavanja.Dir+"/φ", &network, shell.FilesWrite.Create(true))
 }
 func checkError(err error) {
 	if err != nil {

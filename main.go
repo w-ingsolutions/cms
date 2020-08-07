@@ -9,18 +9,20 @@ import (
 	"github.com/gioapp/gel/helper"
 	cms "github.com/w-ingsolutions/cms/app"
 	"github.com/w-ingsolutions/cms/cfg"
-	in "github.com/w-ingsolutions/cms/cfg/ini"
 	"log"
 	"os"
 )
 
 func main() {
-	w := cms.NewWingCMS()
-
+	podesavanja := cms.WingPodesavanja{
+		Title: "CMS",
+		Dir:   "wing",
+	}
 	if cfg.Initial {
 		fmt.Println("running initial sync")
 	}
-	in.Init(w.Podesavanja.File)
+	//in.Init(podesavanja.File)
+	w := cms.NewWingCMS(podesavanja)
 
 	go func() {
 		defer os.Exit(0)
