@@ -56,20 +56,20 @@ func RadoviKategorije() map[string]sadrzaj.Kategorija {
 	}
 }
 
-func Radovi() sadrzaj.TipSadrzaja {
-	return sadrzaj.TipSadrzaja{
-		Naziv:        "Rad",
-		NazivMnozina: "Radovi",
-		Slug:         "rad",
-		SlugMnozina:  "radovi",
-		Struktura: map[string]sadrzaj.PoljeSadrzaja{
-			"Naziv":    sadrzaj.PoljeSadrzaja{"Naziv", "Text", ""},
-			"Opis":     sadrzaj.PoljeSadrzaja{"Opis", "Text", ""},
-			"Obracun":  sadrzaj.PoljeSadrzaja{"Obracun", "Text", ""},
-			"Jedinica": sadrzaj.PoljeSadrzaja{"Jedinica", "Text", ""},
-			"Cena":     sadrzaj.PoljeSadrzaja{"Cena", "Num", ""},
-			"Slug":     sadrzaj.PoljeSadrzaja{"Slug", "Text", ""},
-			//"Neophodan": sadrzaj.PoljeSadrzaja{"Neophodan", "Array", ""},
+func Radovi() content.Type {
+	return content.Type{
+		Title:       "Rad",
+		TitlePlural: "Radovi",
+		Slug:        "rad",
+		SlugPlural:  "radovi",
+		Struct: map[string]content.Field{
+			"Title":    content.Field{"Title", "Text", ""},
+			"Opis":     content.Field{"Opis", "Text", ""},
+			"Obracun":  content.Field{"Obracun", "Text", ""},
+			"Jedinica": content.Field{"Jedinica", "Text", ""},
+			"Cena":     content.Field{"Cena", "Num", ""},
+			"Slug":     content.Field{"Slug", "Text", ""},
+			//"Neophodan": content.Field{"Neophodan", "Array", ""},
 		},
 		Kategorije: RadoviKategorije(),
 	}

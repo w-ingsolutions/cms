@@ -9,23 +9,24 @@ import (
 	"gioui.org/widget"
 	"gioui.org/widget/material"
 	"github.com/gioapp/gel/helper"
+	"github.com/gioapp/gel/theme"
 	shell "github.com/ipfs/go-ipfs-api"
 	"github.com/w-ingsolutions/c/pkg/lyt"
-	"github.com/w-ingsolutions/cms/pkg/sadrzaj"
+	"github.com/w-ingsolutions/cms/pkg/content"
 	"github.com/w-ingsolutions/cms/pkg/utl"
 )
 
-func (w *WingCMS) sadrzaj(slug string, struktura map[string]sadrzaj.PoljeSadrzaja) func() {
+func sadrzaj(th *theme.DuoUItheme, slug string, struktura map[string]content.PoljeSadrzaja) func() {
 	return func() {
 		widgets := map[string]interface{}{
 			"dodajdugme": new(widget.Clickable),
 		}
 		w.makeWidgets(struktura, widgets)
 
-		//struktura := make(map[string]sadrzaj.PoljeSadrzaja)
+		//struktura := make(map[string]content.Field)
 		mid := func(gtx C) D {
 			return lyt.Format(gtx, "hflexb(middle,r(_))",
-				material.Body1(w.UI.Tema.T, "asasas").Layout,
+				material.Body1(th.T, "asasas").Layout,
 			)
 		}
 		dugme := w.dugme(struktura, slug)
@@ -48,7 +49,7 @@ func (w *WingCMS) isFolder(path, folder string) (i int, b bool) {
 	return
 }
 
-func (w *WingCMS) makeWidgets(struktura map[string]sadrzaj.PoljeSadrzaja, widgets map[string]interface{}) {
+func (w *WingCMS) makeWidgets(struktura map[string]content.Field, widgets map[string]interface{}) {
 	for _, polje := range struktura {
 		var p interface{}
 		switch polje.Tip {
@@ -65,57 +66,57 @@ func (w *WingCMS) makeWidgets(struktura map[string]sadrzaj.PoljeSadrzaja, widget
 				Submit:     false,
 			}
 		}
-		widgets[polje.Naziv] = p
+		widgets[polje.Title] = p
 	}
-	w.Prikaz.w = widgets
+	prikaz.w = widgets
 }
 
-func (w *WingCMS) makeLayout(struktura map[string]sadrzaj.PoljeSadrzaja) []func(gtx C) D {
+func (w *WingCMS) makeLayout(struktura map[string]content.Field) []func(gtx C) D {
 	prikazLista := []func(gtx C) D{}
 	for _, po := range struktura {
 		switch po.Tip {
 		case "Text":
-			field := w.Prikaz.w[po.Naziv].(*widget.Editor)
+			field := w.Prikaz.w[po.Title].(*widget.Editor)
 			if po.Sadrzaj != "" {
 				field.SetText(po.Sadrzaj.(string))
 			}
-			prikazLista = append(prikazLista, utl.Editor(w.UI.Tema, field, false, po.Naziv, func(e widget.EditorEvent) {}))
+			prikazLista = append(prikazLista, utl.Editor(th, field, false, po.Title, func(e widget.EditorEvent) {}))
 		case "Num":
-			field := w.Prikaz.w[po.Naziv].(*widget.Editor)
+			field := w.Prikaz.w[po.Title].(*widget.Editor)
 			if po.Sadrzaj != "" {
 				field.SetText(po.Sadrzaj.(string))
 			}
-			prikazLista = append(prikazLista, utl.Editor(w.UI.Tema, field, false, po.Naziv, func(e widget.EditorEvent) {}))
+			prikazLista = append(prikazLista, utl.Editor(th, field, false, po.Title, func(e widget.EditorEvent) {}))
 		}
 	}
 	return prikazLista
 }
 
-func (w *WingCMS) dugme(struktura map[string]sadrzaj.PoljeSadrzaja, slug string) func(gtx C) D {
+func (w *WingCMS) dugme(struktura map[string]content.Field, slug string) func(gtx C) D {
 	return func(gtx C) D {
 		d := w.Prikaz.w["dodajdugme"].(*widget.Clickable)
-		btn := material.Button(w.UI.Tema.T, d, "Dodaj")
+		btn := material.Button(th.T, d, "Dodaj")
 		btn.CornerRadius = unit.Dp(0)
 		btn.TextSize = unit.Dp(12)
-		btn.Background = helper.HexARGB(w.UI.Tema.Colors["Secondary"])
+		btn.Background = helper.HexARGB(th.Colors["Secondary"])
 		for d.Clicked() {
 			for _, p := range struktura {
-				polje := sadrzaj.PoljeSadrzaja{
-					Naziv: p.Naziv,
+				polje := content.Field{
+					Title: p.Title,
 					Tip:   p.Tip,
 				}
 				switch p.Tip {
 				case "Text":
-					polje.Sadrzaj = w.Prikaz.w[p.Naziv].(*widget.Editor).Text()
+					polje.Sadrzaj = w.Prikaz.w[p.Title].(*widget.Editor).Text()
 				case "Num":
-					polje.Sadrzaj = w.Prikaz.w[p.Naziv].(*widget.Editor).Text()
+					polje.Sadrzaj = w.Prikaz.w[p.Title].(*widget.Editor).Text()
 				}
-				struktura[p.Naziv] = polje
+				struktura[p.Title] = polje
 			}
 			brojSadrzaja, folder := w.isFolder(w.Podesavanja.Dir+"/"+slug, slug)
 			sadrzajUnos := sadrzaj.Sadrzaj{
-				ID:        brojSadrzaja + 1,
-				Struktura: struktura,
+				ID:     brojSadrzaja + 1,
+				Struct: struktura,
 			}
 			var write bytes.Buffer
 			enc := gob.NewEncoder(&write)

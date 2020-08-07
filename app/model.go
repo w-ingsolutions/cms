@@ -26,16 +26,15 @@ var (
 type WingCMS struct {
 	Strana               WingStrana
 	EditPolja            *model.EditabilnaPoljaVrsteRadova
-	TipoviSadrzajaPrikaz []sadrzaj.TipSadrzajaPrikaz
+	TipoviSadrzajaPrikaz []content.TypePrikaz
 	sh                   *shell.Shell
 	ctx                  context.Context
 	UI                   WingUI
 	API                  WingAPI
 	Podesavanja          WingPodesavanja
-	Prikaz               prikaz
 }
 
-type prikaz struct {
+type prikazElementi struct {
 	w map[string]interface{}
 	e []func(gtx C) D
 }
@@ -63,11 +62,11 @@ type WingJezik struct {
 }
 
 type WingPodesavanja struct {
-	Naziv          string
+	Title          string
 	Dir            string
 	File           string
 	Cyr            bool
-	TipoviSadrzaja map[string]sadrzaj.TipSadrzaja
+	TipoviSadrzaja map[string]content.Type
 }
 
 type WingUloge struct {
@@ -81,6 +80,6 @@ type WingCounters struct {
 }
 
 type WingStrana struct {
-	Naziv string
+	Title string
 	Slug  string
 }

@@ -9,7 +9,7 @@ import (
 	"github.com/w-ingsolutions/cms/pkg/sadrzaj"
 )
 
-func (w *WingCMS) kategorije(tip sadrzaj.TipSadrzajaPrikaz) func() {
+func (w *WingCMS) kategorije(tip content.TypePrikaz) func() {
 	return func() {
 		widgets := map[string]interface{}{
 			"struktura": &layout.List{
@@ -23,7 +23,7 @@ func (w *WingCMS) kategorije(tip sadrzaj.TipSadrzajaPrikaz) func() {
 				Axis: layout.Vertical,
 			}
 		}
-		w.Prikaz.w = widgets
+		prikaz.w = widgets
 		for _, row := range tip.Kategorije {
 			var r sadrzaj.Kategorija
 			r = row
@@ -36,10 +36,10 @@ func (w *WingCMS) kategorije(tip sadrzaj.TipSadrzajaPrikaz) func() {
 					}
 				}
 
-				prikazLista = append(prikazLista, w.rowListKategorija(r, podKategorije, w.Prikaz.w[r.Slug+"_lista"].(*layout.List), sadrzajDugme))
+				prikazLista = append(prikazLista, w.rowListKategorija(r, podKategorije, prikaz.w[r.Slug+"_lista"].(*layout.List), sadrzajDugme))
 			}
 		}
-		w.Prikaz.e = prikazLista
+		prikaz.e = prikazLista
 	}
 }
 
@@ -49,7 +49,7 @@ func (w *WingCMS) rowListKategorija(kategorija sadrzaj.Kategorija, podKategorije
 		return lyt.Format(gtx, "vflexb(middle,r(_),r(_))",
 			func(gtx C) D {
 				return lyt.Format(gtx, "hflexb(middle,f(0.5,_),f(0.5,_),r(_))",
-					material.Body1(w.UI.Tema.T, kategorija.Naziv).Layout,
+					material.Body1(w.UI.Tema.T, kategorija.Title).Layout,
 					material.Body1(w.UI.Tema.T, kategorija.Slug).Layout,
 					material.Body1(w.UI.Tema.T, kategorija.Slug).Layout,
 				)
@@ -61,7 +61,7 @@ func (w *WingCMS) rowListKategorija(kategorija sadrzaj.Kategorija, podKategorije
 						func(gtx C) D {
 							return lyt.Format(gtx, "hflexb(middle,r(_),f(0.5,_),f(0.5,_))",
 								material.Body1(w.UI.Tema.T, podKategorije[i].Parent).Layout,
-								material.Body1(w.UI.Tema.T, podKategorije[i].Naziv).Layout,
+								material.Body1(w.UI.Tema.T, podKategorije[i].Title).Layout,
 								material.Body1(w.UI.Tema.T, podKategorije[i].Slug).Layout,
 							)
 						},

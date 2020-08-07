@@ -24,7 +24,7 @@ var (
 	}
 )
 
-func Meni(th *theme.DuoUItheme, tipoviSadrzajaPrikaz []sadrzaj.TipSadrzajaPrikaz, slug string) func(gtx C) D {
+func Meni(th *theme.DuoUItheme, tipoviSadrzajaPrikaz []content.TypePrikaz, slug string) func(gtx C) D {
 	return func(gtx C) D {
 		return container.DuoUIcontainer(th, 4, th.Colors["DarkGrayI"]).Layout(gtx, layout.N, func(gtx C) D {
 			gtx.Constraints.Max.X = 180
@@ -38,62 +38,65 @@ func Meni(th *theme.DuoUItheme, tipoviSadrzajaPrikaz []sadrzaj.TipSadrzajaPrikaz
 				func(gtx C) D {
 					return meniList.Layout(gtx, len(tipoviSadrzajaPrikaz), func(gtx C, i int) D {
 						tipSadrzaja := tipoviSadrzajaPrikaz[i]
-						btn := icontextbtn.IconTextBtn(th.T, tipSadrzaja.Link, th.Icons[tipSadrzaja.SlugMnozina], unit.Dp(48), th.Colors["Light"], tipSadrzaja.NazivMnozina)
+						btn := icontextbtn.IconTextBtn(th.T, tipSadrzaja.Link, th.Icons[tipSadrzaja.SlugPlural], unit.Dp(48), th.Colors["Light"], tipSadrzaja.TitlePlural)
 						btn.TextSize = unit.Dp(16)
 						btn.CornerRadius = unit.Dp(0)
 						btn.Background = helper.HexARGB(th.Colors["Gray"])
-						LinkoviMenijaKlik(tipSadrzaja)
+						LinkoviMenijaKlik(w, tipSadrzaja)
 						b := lyt.Format(gtx, "vflexb(middle,r(_))",
 							func(gtx C) D {
 								return btn.Layout(gtx)
 							},
 						)
-						if slug == tipSadrzaja.SlugMnozina {
+						if slug == tipSadrzaja.SlugPlural {
 							b = lyt.Format(gtx, "vflexb(middle,r(_),r(_))",
 								func(gtx C) D {
 									return btn.Layout(gtx)
 								},
-								tipSadrzajaPodMeni(tipSadrzaja),
+								tipSadrzajaPodMeni(th, tipSadrzaja),
 							)
 						}
 						return b
 					})
 				},
-				w.stranaDugme(noviTipDugme, w.podesavanjaTipa(sadrzaj.TipSadrzajaPrikaz{}), "Dodaj Novi Tip", "novi_tip"),
+				stranaDugme(th, noviTipDugme, w.podesavanjaTipa(content.TypePrikaz{}), "Dodaj Novi Tip", "novi_tip"),
 			)
 		})
 	}
 }
 
-func LinkoviMenijaKlik(w *WingCMS, l sadrzaj.TipSadrzajaPrikaz) {
+func LinkoviMenijaKlik(w *WingCMS, l content.TypePrikaz) {
 	for l.Link.Clicked() {
-		w.Strana = WingStrana{l.Naziv, l.SlugMnozina}
-		//w.Prikaz = w.Db.DbReadAll(l.SlugMnozina)
+		strana = WingStrana{l.Title, l.SlugPlural}
+		//w.Prikaz = w.Db.DbReadAll(l.SlugPlural)
 	}
 	return
 }
 
-func tipSadrzajaPodMeni(s sadrzaj.TipSadrzajaPrikaz) func(gtx C) D {
+//Strana               WingStrana
+//EditPolja            *model.EditabilnaPoljaVrsteRadova
+//TipoviSadrzajaPrikaz []content.TypePrikaz
+func tipSadrzajaPodMeni(th *theme.DuoUItheme, s content.TypePrikaz) func(gtx C) D {
 	return func(gtx C) D {
 		return lyt.Format(gtx, "vflexb(middle,r(_),r(_),r(_),r(_),r(_))",
-			w.tipSadrzajaPodMeniDugme(sveOdTipaSadrzajaDugme, w.sveOdTipa(s), "Sve od "+s.NazivMnozina, s.SlugMnozina),
-			w.tipSadrzajaPodMeniDugme(dodajSadrzajDugme, w.sadrzaj(s.SlugMnozina, s.Struktura), "Dodaj novi "+s.Naziv, "novi_"+s.Slug),
-			w.tipSadrzajaPodMeniDugme(kategorijeSadrzajaDugme, w.kategorije(s), "Kategorije "+s.NazivMnozina, "kategorije_"+s.SlugMnozina),
-			w.tipSadrzajaPodMeniDugme(oznakeSadrzajaDugme, func() {}, "Oznake "+s.NazivMnozina, "oznake_"+s.SlugMnozina),
-			w.tipSadrzajaPodMeniDugme(podesavanjeSadrzajaDugme, w.podesavanjaTipa(s), "Podesavanja "+s.NazivMnozina, "podesavanja_"+s.SlugMnozina),
+			tipSadrzajaPodMeniDugme(th, sveOdTipaSadrzajaDugme, w.sveOdTipa(s), "Sve od "+s.TitlePlural, s.SlugPlural),
+			tipSadrzajaPodMeniDugme(th, dodajSadrzajDugme, w.sadrzaj(s.SlugPlural, s.Struct), "Dodaj novi "+s.Title, "novi_"+s.Slug),
+			tipSadrzajaPodMeniDugme(th, kategorijeSadrzajaDugme, w.kategorije(s), "Kategorije "+s.TitlePlural, "kategorije_"+s.SlugPlural),
+			tipSadrzajaPodMeniDugme(th, oznakeSadrzajaDugme, func() {}, "Oznake "+s.TitlePlural, "oznake_"+s.SlugPlural),
+			tipSadrzajaPodMeniDugme(th, podesavanjeSadrzajaDugme, w.podesavanjaTipa(s), "Podesavanja "+s.TitlePlural, "podesavanja_"+s.SlugPlural),
 		)
 	}
 }
 
-func (w *WingCMS) tipSadrzajaPodMeniDugme(b *widget.Clickable, f func(), t, p string) func(gtx C) D {
+func tipSadrzajaPodMeniDugme(th *theme.DuoUItheme, b *widget.Clickable, f func(), t, p string) func(gtx C) D {
 	return func(gtx C) D {
-		btn := icontextbtn.IconTextBtn(w.UI.Tema.T, b, w.UI.Tema.Icons["stolarski"], unit.Dp(48), w.UI.Tema.Colors["Light"], " "+t)
+		btn := icontextbtn.IconTextBtn(th.T, b, th.Icons["stolarski"], unit.Dp(48), th.Colors["Light"], " "+t)
 		btn.CornerRadius = unit.Dp(0)
 		btn.TextSize = unit.Dp(12)
-		btn.Background = helper.HexARGB(w.UI.Tema.Colors["LightGrayII"])
+		btn.Background = helper.HexARGB(th.Colors["LightGrayII"])
 		for b.Clicked() {
 			f()
-			w.Strana = WingStrana{t, p}
+			strana = WingStrana{t, p}
 		}
 		return btn.Layout(gtx)
 	}

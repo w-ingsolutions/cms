@@ -20,17 +20,17 @@ func header(w *WingCMS) func(gtx C) D {
 func (w *WingCMS) headerMenu() func(gtx C) D {
 	r := func(gtx C) D {
 		return lyt.Format(gtx, "hflexb(middle,r(_),r(_),r(_),r(_),r(_))",
-			w.stranaDugme(radoviDugme, func() {}, "KOMANDNA TABLA", "komandna_tabla"),
+			stranaDugme(w.UI.Tema, radoviDugme, func() {}, "KOMANDNA TABLA", "komandna_tabla"),
 			helper.DuoUIline(true, 0, 2, 2, w.UI.Tema.Colors["DarkGrayI"]),
-			w.stranaDugme(sumaDugme, func() {}, "SUMA", "sumaRadovi"),
+			stranaDugme(w.UI.Tema, sumaDugme, func() {}, "SUMA", "sumaRadovi"),
 			helper.DuoUIline(true, 0, 2, 2, w.UI.Tema.Colors["DarkGrayI"]),
-			w.stranaDugme(sumaMaterialDugme, func() {}, "SUMA MATERIJAL", "sumaMaterijal"),
+			stranaDugme(w.UI.Tema, sumaMaterialDugme, func() {}, "SUMA MATERIJAL", "sumaMaterijal"),
 		)
 	}
 	if w.UI.Device != "mob" {
 		r = func(gtx C) D {
 			return lyt.Format(gtx, "hflexb(middle,r(_))",
-				w.stranaDugme(radoviDugme, func() {}, "RADOVI", "radovi"),
+				stranaDugme(w.UI.Tema, radoviDugme, func() {}, "RADOVI", "radovi"),
 			)
 		}
 	}

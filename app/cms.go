@@ -8,13 +8,17 @@ import (
 	"github.com/w-ingsolutions/cms/pkg/utl"
 )
 
+var (
+	prikaz prikazElementi
+)
+
 func (w *WingCMS) GlavniEkran(gtx layout.Context) {
 	lyt.Format(gtx, "hflexb(start,r(_),f(1,_))",
 		Meni(w.UI.Tema, w.TipoviSadrzajaPrikaz, w.Strana.Slug),
 		func(gtx C) D {
 			return lyt.Format(gtx, "vflexb(start,r(_),f(1,_),r(_))",
 				header(w),
-				utl.Strana(w.UI.Tema, w.lista(), w.Strana.Naziv),
+				utl.Strana(w.UI.Tema, w.lista(), w.Strana.Title),
 				footer(w),
 			)
 		})

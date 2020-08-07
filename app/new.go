@@ -60,7 +60,7 @@ func NewWingCMS() *WingCMS {
 	}
 	w.UI.Window = app.NewWindow(
 		app.Size(unit.Dp(1280), unit.Dp(1024)),
-		app.Title(w.Podesavanja.Naziv),
+		app.Title(w.Podesavanja.Title),
 	)
 	counters := WingCounters{
 		Kolicina: &counter.DuoUIcounter{
@@ -96,13 +96,13 @@ func NewWingCMS() *WingCMS {
 //
 //func (w *WingCMS) UcitavanjeTipaSadrzaja() {
 //	for _, t := range w.TipoviSadrzaja {
-//		w.Prikaz = w.Db.DbReadAll(t.SlugMnozina)
+//		w.Prikaz = w.Db.DbReadAll(t.SlugPlural)
 //	}
 //}
 
 func (w *WingCMS) osnovnoPodesavanje() {
 	w.Podesavanja = WingPodesavanja{
-		Naziv:          "CMS",
+		Title:          "CMS",
 		Dir:            "/wing",
 		Cyr:            false,
 		TipoviSadrzaja: tipoviSadrzaja(),

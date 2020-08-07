@@ -6,24 +6,24 @@ import (
 	"github.com/w-ingsolutions/cms/pkg/sadrzaj"
 )
 
-func tipoviSadrzaja() map[string]sadrzaj.TipSadrzaja {
-	return map[string]sadrzaj.TipSadrzaja{
+func tipoviSadrzaja() map[string]content.Type {
+	return map[string]content.Type{
 		"radovi":    osnovni.Radovi(),
 		"materijal": osnovni.Materijal(),
 	}
 }
 
 func (w *WingCMS) tipoviSadrzajaPrikaz() {
-	var tipovi []sadrzaj.TipSadrzajaPrikaz
+	var tipovi []content.TypePrikaz
 	for _, t := range w.Podesavanja.TipoviSadrzaja {
-		tt := sadrzaj.TipSadrzajaPrikaz{
-			Naziv:        t.Naziv,
-			NazivMnozina: t.NazivMnozina,
-			Slug:         t.Slug,
-			SlugMnozina:  t.SlugMnozina,
-			Struktura:    t.Struktura,
-			Kategorije:   t.Kategorije,
-			Link:         new(widget.Clickable),
+		tt := content.TypePrikaz{
+			Title:       t.Title,
+			TitlePlural: t.TitlePlural,
+			Slug:        t.Slug,
+			SlugPlural:  t.SlugPlural,
+			Struct:      t.Struct,
+			Kategorije:  t.Kategorije,
+			Link:        new(widget.Clickable),
 		}
 		tipovi = append(tipovi, tt)
 		w.TipoviSadrzajaPrikaz = tipovi

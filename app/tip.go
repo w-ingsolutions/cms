@@ -17,7 +17,7 @@ import (
 	"github.com/w-ingsolutions/cms/pkg/utl"
 )
 
-func (w *WingCMS) podesavanjaTipa(tip sadrzaj.TipSadrzajaPrikaz) func() {
+func (w *WingCMS) podesavanjaTipa(tip content.TypePrikaz) func() {
 	return func() {
 		widgets := map[string]interface{}{
 			"naziv": &widget.Editor{
@@ -67,27 +67,27 @@ func (w *WingCMS) podesavanjaTipa(tip sadrzaj.TipSadrzajaPrikaz) func() {
 		strukturaLista := w.Prikaz.w["struktura"].(*layout.List)
 		vrstePolja := w.Prikaz.w["vrstepolja"].(*layout.List)
 
-		struktura := make(map[string]sadrzaj.PoljeSadrzaja)
-		if tip.Struktura != nil {
-			struktura = tip.Struktura
+		struktura := make(map[string]content.Field)
+		if tip.Struct != nil {
+			struktura = tip.Struct
 		}
 
-		if tip.Naziv != "" {
-			naziv.SetText(tip.Naziv)
+		if tip.Title != "" {
+			naziv.SetText(tip.Title)
 		}
-		if tip.NazivMnozina != "" {
-			nazivmnozina.SetText(tip.NazivMnozina)
+		if tip.TitlePlural != "" {
+			nazivmnozina.SetText(tip.TitlePlural)
 		}
 		if tip.Slug != "" {
 			slug.SetText(tip.Slug)
 		}
-		if tip.SlugMnozina != "" {
-			slugmnozina.SetText(tip.SlugMnozina)
+		if tip.SlugPlural != "" {
+			slugmnozina.SetText(tip.SlugPlural)
 		}
 
 		w.Prikaz.e = []func(gtx C) D{
-			utl.Editor(w.UI.Tema, naziv, false, "Naziv", func(e widget.EditorEvent) {}),
-			utl.Editor(w.UI.Tema, nazivmnozina, false, "Naziv mnozina", func(e widget.EditorEvent) {}),
+			utl.Editor(w.UI.Tema, naziv, false, "Title", func(e widget.EditorEvent) {}),
+			utl.Editor(w.UI.Tema, nazivmnozina, false, "Title mnozina", func(e widget.EditorEvent) {}),
 			utl.Editor(w.UI.Tema, slug, false, "Slug", func(e widget.EditorEvent) {}),
 			utl.Editor(w.UI.Tema, slugmnozina, false, "Slug mnozina", func(e widget.EditorEvent) {}),
 			strukturaListaIzgled(w.UI.Tema, struktura, strukturaLista),
@@ -110,12 +110,12 @@ func vrstePoljaSadrzaja(th *material.Theme, l *layout.List, enum *widget.Enum) f
 	}
 }
 
-func strukturaListaIzgled(th *theme.DuoUItheme, struktura map[string]sadrzaj.PoljeSadrzaja, list *layout.List) func(gtx C) D {
+func strukturaListaIzgled(th *theme.DuoUItheme, struktura map[string]content.Field, list *layout.List) func(gtx C) D {
 	return func(gtx C) D {
-		var strArray []sadrzaj.PoljeSadrzaja
+		var strArray []content.Field
 		for _, str := range struktura {
-			strArray = append(strArray, sadrzaj.PoljeSadrzaja{
-				Naziv: str.Naziv,
+			strArray = append(strArray, content.Field{
+				Title: str.Title,
 				Tip:   str.Tip,
 			})
 		}
@@ -123,7 +123,7 @@ func strukturaListaIzgled(th *theme.DuoUItheme, struktura map[string]sadrzaj.Pol
 			return lyt.Format(gtx, "vflexb(middle,r(_),r(_))",
 				func(gtx C) D {
 					return lyt.Format(gtx, "hflexb(middle,r(_),r(_))",
-						material.Body1(th.T, strArray[i].Naziv).Layout,
+						material.Body1(th.T, strArray[i].Title).Layout,
 						material.Body1(th.T, strArray[i].Tip).Layout,
 					)
 				},
@@ -133,22 +133,22 @@ func strukturaListaIzgled(th *theme.DuoUItheme, struktura map[string]sadrzaj.Pol
 	}
 }
 
-func (w *WingCMS) dodajtipdugme(struktura map[string]sadrzaj.PoljeSadrzaja, nazivTipaSadrzaja *widget.Editor, vrstePolja *layout.List, vrste *widget.Enum) func(gtx C) D {
+func (w *WingCMS) dodajtipdugme(struktura map[string]content.Field, nazivTipaSadrzaja *widget.Editor, vrstePolja *layout.List, vrste *widget.Enum) func(gtx C) D {
 	return func(gtx C) D {
 		d := w.Prikaz.w["dodajtipdugme"].(*widget.Clickable)
 		return lyt.Format(gtx, "hflexb(middle,r(_),r(_),r(_))",
-			utl.Editor(w.UI.Tema, nazivTipaSadrzaja, false, "Naziv tipa sadrzaja", func(e widget.EditorEvent) {}),
+			utl.Editor(w.UI.Tema, nazivTipaSadrzaja, false, "Title tipa sadrzaja", func(e widget.EditorEvent) {}),
 			vrstePoljaSadrzaja(w.UI.Tema.T, vrstePolja, vrste),
 			w.iconLink(d, "counterPlusIcon", func() {
-				struktura[nazivTipaSadrzaja.Text()] = sadrzaj.PoljeSadrzaja{
-					Naziv: nazivTipaSadrzaja.Text(),
+				struktura[nazivTipaSadrzaja.Text()] = content.Field{
+					Title: nazivTipaSadrzaja.Text(),
 					Tip:   vrste.Value,
 				}
 			}))
 	}
 }
 
-func (w *WingCMS) dodajdugme(struktura map[string]sadrzaj.PoljeSadrzaja) func(gtx C) D {
+func (w *WingCMS) dodajdugme(struktura map[string]content.Field) func(gtx C) D {
 	return func(gtx C) D {
 		d := w.Prikaz.w["dodajdugme"].(*widget.Clickable)
 		btn := material.Button(w.UI.Tema.T, d, "Dodaj")
@@ -157,12 +157,12 @@ func (w *WingCMS) dodajdugme(struktura map[string]sadrzaj.PoljeSadrzaja) func(gt
 		//btn.Inset = layout.Inset{unit.Dp(8), unit.Dp(8), unit.Dp(10), unit.Dp(8)}
 		btn.Background = helper.HexARGB(w.UI.Tema.Colors["Secondary"])
 		for d.Clicked() {
-			tipSadrzaja := sadrzaj.TipSadrzaja{
-				Naziv:        w.Prikaz.w["naziv"].(*widget.Editor).Text(),
-				NazivMnozina: w.Prikaz.w["nazivmnozina"].(*widget.Editor).Text(),
-				Slug:         w.Prikaz.w["slug"].(*widget.Editor).Text(),
-				SlugMnozina:  w.Prikaz.w["slugmnozina"].(*widget.Editor).Text(),
-				Struktura:    struktura,
+			tipSadrzaja := content.Type{
+				Title:       w.Prikaz.w["naziv"].(*widget.Editor).Text(),
+				TitlePlural: w.Prikaz.w["nazivmnozina"].(*widget.Editor).Text(),
+				Slug:        w.Prikaz.w["slug"].(*widget.Editor).Text(),
+				SlugPlural:  w.Prikaz.w["slugmnozina"].(*widget.Editor).Text(),
+				Struct:      struktura,
 			}
 			w.Podesavanja.TipoviSadrzaja[w.Prikaz.w["slug"].(*widget.Editor).Text()] = tipSadrzaja
 			w.tipoviSadrzajaPrikaz()

@@ -4,16 +4,17 @@ import (
 	"fmt"
 	"gioui.org/widget"
 	"gioui.org/widget/material"
+	"github.com/gioapp/gel/theme"
 	"github.com/w-ingsolutions/c/pkg/lyt"
 	osnovna "github.com/w-ingsolutions/cms/DEF"
 	"github.com/w-ingsolutions/cms/pkg/sadrzaj"
 )
 
-func (w *WingCMS) sveOdTipa(tip sadrzaj.TipSadrzajaPrikaz) func() {
+func sveOdTipa(th *theme.DuoUItheme, tip content.TypePrikaz) func() {
 	return func() {
 		widgets := make(map[string]interface{})
 		prikazLista := []func(gtx C) D{}
-		if tip.SlugMnozina == "materijali" {
+		if tip.SlugPlural == "materijali" {
 			files := osnovna.NewMaterijali()
 			for _, sadrzajFiles := range files {
 				widgets[fmt.Sprint(sadrzajFiles.ID)] = new(widget.Clickable)
@@ -23,12 +24,12 @@ func (w *WingCMS) sveOdTipa(tip sadrzaj.TipSadrzajaPrikaz) func() {
 			for _, row := range files {
 				var r sadrzaj.Sadrzaj
 				r = row
-				prikazLista = append(prikazLista, w.rowList(r.Struktura, sadrzajDugme, tip.SlugMnozina, r.Struktura["Naziv"].Sadrzaj.(string), r.Struktura["Slug"].Sadrzaj.(string)))
+				prikazLista = append(prikazLista, rowList(th, r.Struct, sadrzajDugme, tip.SlugPlural, r.Struct["Title"].Sadrzaj.(string), r.Struct["Slug"].Sadrzaj.(string)))
 				fmt.Println("sadrzajFiles.Name", row.ID)
 			}
 		}
 
-		if tip.SlugMnozina == "radovi" {
+		if tip.SlugPlural == "radovi" {
 			files := osnovna.NewRadovi()
 			for _, sadrzajFiles := range files {
 				widgets[sadrzajFiles.Kategorija+"_"+fmt.Sprint(sadrzajFiles.ID)] = new(widget.Clickable)
@@ -38,39 +39,39 @@ func (w *WingCMS) sveOdTipa(tip sadrzaj.TipSadrzajaPrikaz) func() {
 			for _, row := range files {
 				var r sadrzaj.Sadrzaj
 				r = row
-				sl := r.Struktura["Slug"].Sadrzaj.(string)
+				sl := r.Struct["Slug"].Sadrzaj.(string)
 
-				prikazLista = append(prikazLista, w.rowList(r.Struktura, sadrzajDugme, tip.SlugMnozina, r.Struktura["Naziv"].Sadrzaj.(string), sl))
+				prikazLista = append(prikazLista, w.rowList(r.Struct, sadrzajDugme, tip.SlugPlural, r.Struct["Title"].Sadrzaj.(string), sl))
 				fmt.Println("slslsl::::::::::::", sl)
 			}
 		}
-		//if tip.SlugMnozina != "materijali" && tip.SlugMnozina != "radovi" {
-		//	files, err := w.sh.FilesLs(w.ctx, w.Podesavanja.Dir+"/"+tip.SlugMnozina)
+		//if tip.SlugPlural != "materijali" && tip.SlugPlural != "radovi" {
+		//	files, err := w.sh.FilesLs(w.ctx, w.Podesavanja.Dir+"/"+tip.SlugPlural)
 		//	checkError(err)
 		//	for _, sadrzajFiles := range files {
 		//		widgets[sadrzajFiles.Name] = new(widget.Clickable)
 		//	}
 		//	w.Prikaz.w = widgets
 		//	for _, row := range files {
-		//		file, err := w.sh.FilesRead(w.ctx, w.Podesavanja.Dir+"/"+tip.SlugMnozina+"/"+row.Name)
+		//		file, err := w.sh.FilesRead(w.ctx, w.Podesavanja.Dir+"/"+tip.SlugPlural+"/"+row.Name)
 		//		checkError(err)
 		//		var s sadrzaj.Sadrzaj
 		//		dec := gob.NewDecoder(file)
 		//		err = dec.Decode(&s)
 		//		checkError(err)
-		//		prikazLista = append(prikazLista, w.rowList(s.Struktura, sadrzajDugme, tip.SlugMnozina, s.Struktura["Naziv"].Sadrzaj.(string), s.Struktura["Slug"].Sadrzaj.(string)))
+		//		prikazLista = append(prikazLista, w.rowList(s.Struct, sadrzajDugme, tip.SlugPlural, s.Struct["Title"].Sadrzaj.(string), s.Struct["Slug"].Sadrzaj.(string)))
 		//	}
 		//}
 		w.Prikaz.e = prikazLista
 	}
 }
 
-func (w *WingCMS) rowList(struktura map[string]sadrzaj.PoljeSadrzaja, btn *widget.Clickable, tip, naziv, slug string) func(gtx C) D {
+func rowList(th *theme.DuoUItheme, struktura map[string]content.Field, btn *widget.Clickable, tip, naziv, slug string) func(gtx C) D {
 	return func(gtx C) D {
 		return lyt.Format(gtx, "hflexb(middle,f(0.5,_),f(0.5,_),r(_))",
-			material.Body1(w.UI.Tema.T, naziv).Layout,
-			material.Body1(w.UI.Tema.T, slug).Layout,
-			w.stranaDugme(btn, w.sadrzaj(tip, struktura), "Uredi", "sadrzaj"),
+			material.Body1(th.T, naziv).Layout,
+			material.Body1(th.T, slug).Layout,
+			stranaDugme(btn, w.sadrzaj(tip, struktura), "Uredi", "sadrzaj"),
 		)
 	}
 }
