@@ -28,7 +28,7 @@ type WingCMS struct {
 	ctx            context.Context
 	UI             WingUI
 	API            WingAPI
-	tipoviSadrzaja map[string]φ.T
+	tipoviSadrzaja map[string]phi.T
 }
 
 type prikazElementi struct {

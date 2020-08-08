@@ -11,6 +11,7 @@ import (
 	"github.com/gioapp/gel/theme"
 	shell "github.com/ipfs/go-ipfs-api"
 	"github.com/w-ingsolutions/c/pkg/lyt"
+	"github.com/w-ingsolutions/cms/pkg/phi"
 	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
@@ -26,7 +27,7 @@ var (
 	}
 )
 
-func Meni(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, t map[string]φ.T, tipoviSadrzajaPrikaz []φ.ContentType, slug string) func(gtx C) D {
+func Meni(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, t map[string]phi.T, tipoviSadrzajaPrikaz []phi.ContentType, slug string) func(gtx C) D {
 	return func(gtx C) D {
 		return container.DuoUIcontainer(th, 4, th.Colors["DarkGrayI"]).Layout(gtx, layout.N, func(gtx C) D {
 			gtx.Constraints.Max.X = 180
@@ -61,13 +62,13 @@ func Meni(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, t map[stri
 						return b
 					})
 				},
-				stranaDugme(th, noviTipDugme, podesavanjaTipa(ctx, sh, th, t, φ.ContentType{}), "Dodaj Novi Tip", "novi_tip"),
+				stranaDugme(th, noviTipDugme, podesavanjaTipa(ctx, sh, th, t, phi.ContentType{}), "Dodaj Novi Tip", "novi_tip"),
 			)
 		})
 	}
 }
 
-func LinkoviMenijaKlik(l φ.ContentType) {
+func LinkoviMenijaKlik(l phi.ContentType) {
 	for l.Link.Clicked() {
 		currentPage = Page{l.Title, l.SlugPlural}
 		//w.Prikaz = w.Db.DbReadAll(l.SlugPlural)
@@ -78,7 +79,7 @@ func LinkoviMenijaKlik(l φ.ContentType) {
 //Strana               WingStrana
 //EditPolja            *model.EditabilnaPoljaVrsteRadova
 //TipoviSadrzajaPrikaz []φ.T
-func tipSadrzajaPodMeni(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, t map[string]φ.T, s φ.ContentType) func(gtx C) D {
+func tipSadrzajaPodMeni(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, t map[string]phi.T, s phi.ContentType) func(gtx C) D {
 	return func(gtx C) D {
 		return lyt.Format(gtx, "vflexb(middle,r(_),r(_),r(_),r(_),r(_))",
 			tipSadrzajaPodMeniDugme(th, sveOdTipaSadrzajaDugme, sveOdTipa(ctx, sh, th, s), "Sve od "+s.TitlePlural, s.SlugPlural),

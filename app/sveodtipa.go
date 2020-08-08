@@ -11,10 +11,11 @@ import (
 	shell "github.com/ipfs/go-ipfs-api"
 	"github.com/w-ingsolutions/c/pkg/lyt"
 	osnovna "github.com/w-ingsolutions/cms/DEF"
+	"github.com/w-ingsolutions/cms/pkg/phi"
 	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
-func sveOdTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, tip φ.ContentType) func() {
+func sveOdTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, tip phi.ContentType) func() {
 	return func() {
 		widgets := make(map[string]interface{})
 		prikazLista := []func(gtx C) D{}
@@ -38,7 +39,7 @@ func sveOdTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, tip �
 			}
 			prikaz.w = widgets
 			for _, row := range files {
-				var r φ.Φ
+				var r phi.Φ
 				r = row
 				prikazLista = append(prikazLista, rowList(ctx, sh, th, r.Struct, widgets[fmt.Sprint(r.ID)].(*widget.Clickable), tip.SlugPlural, r.Struct["Title"].Content.(string), r.Struct["Slug"].Content.(string)))
 				//fmt.Println("r.Struct", r.Struct["Title"])
@@ -62,7 +63,7 @@ func sveOdTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, tip �
 			}
 			prikaz.w = widgets
 			for _, row := range files {
-				var r φ.Φ
+				var r phi.Φ
 				r = row
 				sl := r.Struct["Slug"].Content.(string)
 
@@ -80,7 +81,7 @@ func sveOdTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, tip �
 			for _, row := range files {
 				file, err := sh.FilesRead(ctx, podesavanja.Dir+"/"+tip.SlugPlural+"/"+row.Name)
 				checkError(err)
-				var s φ.Φ
+				var s phi.Φ
 				dec := gob.NewDecoder(file)
 				err = dec.Decode(&s)
 				checkError(err)
@@ -91,7 +92,7 @@ func sveOdTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, tip �
 	}
 }
 
-func rowList(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, struktura map[string]φ.F, btn *widget.Clickable, tip, naziv, slug string) func(gtx C) D {
+func rowList(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, struktura map[string]phi.F, btn *widget.Clickable, tip, naziv, slug string) func(gtx C) D {
 	return func(gtx C) D {
 		return lyt.Format(gtx, "hflexb(middle,f(0.5,_),f(0.5,_),r(_))",
 			material.Body1(th.T, naziv).Layout,

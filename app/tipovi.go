@@ -6,17 +6,17 @@ import (
 	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
-func CreateContentTypes() map[string]φ.T {
-	return map[string]φ.T{
+func CreateContentTypes() map[string]phi.T {
+	return map[string]phi.T{
 		"radovi":    osnovni.Radovi(),
 		"materijal": osnovni.Materijal(),
 	}
 }
 
-func displayTypes(tipoviSadrzaja map[string]φ.T) {
-	var tipovi []φ.ContentType
+func displayTypes(tipoviSadrzaja map[string]phi.T) {
+	var tipovi []phi.ContentType
 	for _, t := range tipoviSadrzaja {
-		tt := φ.ContentType{
+		tt := phi.ContentType{
 			Title:       t.Title,
 			TitlePlural: t.TitlePlural,
 			Slug:        t.Slug,

@@ -12,7 +12,7 @@ var (
 
 	currentPage          = Page{}
 	podesavanja          WingPodesavanja
-	tipoviSadrzajaPrikaz []φ.ContentType
+	tipoviSadrzajaPrikaz []phi.ContentType
 )
 
 func (w *WingCMS) GlavniEkran(gtx layout.Context) {

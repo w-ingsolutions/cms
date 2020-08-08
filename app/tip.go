@@ -15,7 +15,7 @@ import (
 	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
-func podesavanjaTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, t map[string]φ.T, tip φ.ContentType) func() {
+func podesavanjaTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, t map[string]phi.T, tip phi.ContentType) func() {
 	return func() {
 		widgets := map[string]interface{}{
 			"naziv": &widget.Editor{
@@ -65,7 +65,7 @@ func podesavanjaTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme,
 		strukturaLista := prikaz.w["struktura"].(*layout.List)
 		vrstePolja := prikaz.w["vrstepolja"].(*layout.List)
 
-		struktura := make(map[string]φ.F)
+		struktura := make(map[string]phi.F)
 		if tip.Struct != nil {
 			struktura = tip.Struct
 		}
@@ -108,11 +108,11 @@ func vrstePoljaSadrzaja(th *material.Theme, l *layout.List, enum *widget.Enum) f
 	}
 }
 
-func strukturaListaIzgled(th *theme.DuoUItheme, struktura map[string]φ.F, list *layout.List) func(gtx C) D {
+func strukturaListaIzgled(th *theme.DuoUItheme, struktura map[string]phi.F, list *layout.List) func(gtx C) D {
 	return func(gtx C) D {
-		var strArray []φ.F
+		var strArray []phi.F
 		for _, str := range struktura {
-			strArray = append(strArray, φ.F{
+			strArray = append(strArray, phi.F{
 				Title: str.Title,
 				Type:  str.Type,
 			})
@@ -131,14 +131,14 @@ func strukturaListaIzgled(th *theme.DuoUItheme, struktura map[string]φ.F, list 
 	}
 }
 
-func dodajtipdugme(th *theme.DuoUItheme, struktura map[string]φ.F, nazivTipaSadrzaja *widget.Editor, vrstePolja *layout.List, vrste *widget.Enum) func(gtx C) D {
+func dodajtipdugme(th *theme.DuoUItheme, struktura map[string]phi.F, nazivTipaSadrzaja *widget.Editor, vrstePolja *layout.List, vrste *widget.Enum) func(gtx C) D {
 	return func(gtx C) D {
 		d := prikaz.w["dodajtipdugme"].(*widget.Clickable)
 		return lyt.Format(gtx, "hflexb(middle,r(_),r(_),r(_))",
 			utl.Editor(th, nazivTipaSadrzaja, false, "Title tipa sadrzaja", func(e widget.EditorEvent) {}),
 			vrstePoljaSadrzaja(th.T, vrstePolja, vrste),
 			iconLink(th, d, "counterPlusIcon", func() {
-				struktura[nazivTipaSadrzaja.Text()] = φ.F{
+				struktura[nazivTipaSadrzaja.Text()] = phi.F{
 					Title: nazivTipaSadrzaja.Text(),
 					Type:  vrste.Value,
 				}
@@ -146,7 +146,7 @@ func dodajtipdugme(th *theme.DuoUItheme, struktura map[string]φ.F, nazivTipaSad
 	}
 }
 
-func dodajdugme(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, t map[string]φ.T, s map[string]φ.F) func(gtx C) D {
+func dodajdugme(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, t map[string]phi.T, s map[string]phi.F) func(gtx C) D {
 	return func(gtx C) D {
 		d := prikaz.w["dodajdugme"].(*widget.Clickable)
 		btn := material.Button(th.T, d, "Dodaj")
@@ -155,7 +155,7 @@ func dodajdugme(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, t ma
 		//btn.Inset = layout.Inset{unit.Dp(8), unit.Dp(8), unit.Dp(10), unit.Dp(8)}
 		btn.Background = helper.HexARGB(th.Colors["Secondary"])
 		for d.Clicked() {
-			tipSadrzaja := φ.T{
+			tipSadrzaja := phi.T{
 				Title:       prikaz.w["naziv"].(*widget.Editor).Text(),
 				TitlePlural: prikaz.w["nazivmnozina"].(*widget.Editor).Text(),
 				Slug:        prikaz.w["slug"].(*widget.Editor).Text(),

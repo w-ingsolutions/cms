@@ -4,27 +4,27 @@ import (
 	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
-func Materijal() φ.T {
-	return φ.T{
+func Materijal() phi.T {
+	return phi.T{
 		Title:       "Materijal",
 		TitlePlural: "Materijali",
 		Slug:        "materijal",
 		SlugPlural:  "materijali",
-		Struct: map[string]φ.F{
-			"Id":                φ.F{"Id", "Text", ""},
-			"Title":             φ.F{"Title", "Text", ""},
-			"Opis":              φ.F{"Opis", "Text", ""},
-			"Obracun":           φ.F{"Obracun", "Text", ""},
-			"Proizvodjac":       φ.F{"Proizvodjac", "Text", ""},
-			"OsobineNamena":     φ.F{"OsobineNamena", "Text", ""},
-			"NacinRada":         φ.F{"NacinRada", "Text", ""},
-			"JedinicaPotrosnje": φ.F{"JedinicaPotrosnje", "Text", ""},
-			"Potrosnja":         φ.F{"Potrosnja", "Num", ""},
-			"RokUpotrebe":       φ.F{"RokUpotrebe", "Text", ""},
-			"Jedinica":          φ.F{"Jedinica", "Text", ""},
-			"Pakovanje":         φ.F{"Pakovanje", "Num", ""},
-			"Cena":              φ.F{"Cena", "Num", ""},
-			"Slug":              φ.F{"Slug", "Text", ""},
+		Struct: map[string]phi.F{
+			"Id":                phi.F{"Id", "Text", ""},
+			"Title":             phi.F{"Title", "Text", ""},
+			"Opis":              phi.F{"Opis", "Text", ""},
+			"Obracun":           phi.F{"Obracun", "Text", ""},
+			"Proizvodjac":       phi.F{"Proizvodjac", "Text", ""},
+			"OsobineNamena":     phi.F{"OsobineNamena", "Text", ""},
+			"NacinRada":         phi.F{"NacinRada", "Text", ""},
+			"JedinicaPotrosnje": phi.F{"JedinicaPotrosnje", "Text", ""},
+			"Potrosnja":         phi.F{"Potrosnja", "Num", ""},
+			"RokUpotrebe":       phi.F{"RokUpotrebe", "Text", ""},
+			"Jedinica":          phi.F{"Jedinica", "Text", ""},
+			"Pakovanje":         phi.F{"Pakovanje", "Num", ""},
+			"Cena":              phi.F{"Cena", "Num", ""},
+			"Slug":              phi.F{"Slug", "Text", ""},
 		},
 		//Link:         new(widget.Clickable),
 	}

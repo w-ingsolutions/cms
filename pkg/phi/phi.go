@@ -1,4 +1,4 @@
-package φ
+package phi
 
 import (
 	"gioui.org/widget"

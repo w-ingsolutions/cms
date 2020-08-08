@@ -10,7 +10,7 @@ import (
 	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
-func categories(th *theme.DuoUItheme, tip φ.ContentType) func() {
+func categories(th *theme.DuoUItheme, tip phi.ContentType) func() {
 	return func() {
 		widgets := map[string]interface{}{
 			"struktura": &layout.List{
@@ -26,10 +26,10 @@ func categories(th *theme.DuoUItheme, tip φ.ContentType) func() {
 		}
 		prikaz.w = widgets
 		for _, row := range tip.Categories {
-			var r φ.C
+			var r phi.C
 			r = row
 			if r.Parent == "" {
-				podKategorije := []φ.C{}
+				podKategorije := []phi.C{}
 
 				for _, pk := range tip.Categories {
 					if pk.Parent == row.Slug {
@@ -44,7 +44,7 @@ func categories(th *theme.DuoUItheme, tip φ.ContentType) func() {
 	}
 }
 
-func rowListKategorija(th *theme.DuoUItheme, kategorija φ.C, podKategorije []φ.C, list *layout.List, btn *widget.Clickable) func(gtx C) D {
+func rowListKategorija(th *theme.DuoUItheme, kategorija phi.C, podKategorije []phi.C, list *layout.List, btn *widget.Clickable) func(gtx C) D {
 	return func(gtx C) D {
 
 		return lyt.Format(gtx, "vflexb(middle,r(_),r(_))",

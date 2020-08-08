@@ -10,11 +10,12 @@ import (
 	"github.com/gioapp/gel/theme"
 	shell "github.com/ipfs/go-ipfs-api"
 	"github.com/w-ingsolutions/c/pkg/lyt"
+	"github.com/w-ingsolutions/cms/pkg/phi"
 	"github.com/w-ingsolutions/cms/pkg/utl"
 	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
-func φΦφ(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, slug string, struktura map[string]φ.F) func() {
+func φΦφ(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, slug string, struktura map[string]phi.F) func() {
 	return func() {
 		widgets := map[string]interface{}{
 			"dodajdugme": new(widget.Clickable),
@@ -49,7 +50,7 @@ func isFolder(ctx context.Context, sh *shell.Shell, path, folder string) (i int,
 	return
 }
 
-func makeWidgets(struktura map[string]φ.F, widgets map[string]interface{}) map[string]interface{} {
+func makeWidgets(struktura map[string]phi.F, widgets map[string]interface{}) map[string]interface{} {
 	for _, field := range struktura {
 		var p interface{}
 		switch field.Type {
@@ -72,7 +73,7 @@ func makeWidgets(struktura map[string]φ.F, widgets map[string]interface{}) map[
 	return widgets
 }
 
-func makeLayout(th *theme.DuoUItheme, struktura map[string]φ.F) []func(gtx C) D {
+func makeLayout(th *theme.DuoUItheme, struktura map[string]phi.F) []func(gtx C) D {
 	prikazLista := []func(gtx C) D{}
 	for _, field := range struktura {
 		switch field.Type {
@@ -93,7 +94,7 @@ func makeLayout(th *theme.DuoUItheme, struktura map[string]φ.F) []func(gtx C) D
 	return prikazLista
 }
 
-func dugme(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, struktura map[string]φ.F, slug string) func(gtx C) D {
+func dugme(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, struktura map[string]phi.F, slug string) func(gtx C) D {
 	return func(gtx C) D {
 		d := prikaz.w["dodajdugme"].(*widget.Clickable)
 		btn := material.Button(th.T, d, "Dodaj")
@@ -102,7 +103,7 @@ func dugme(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, struktura
 		btn.Background = helper.HexARGB(th.Colors["Secondary"])
 		for d.Clicked() {
 			for _, p := range struktura {
-				field := φ.F{
+				field := phi.F{
 					Title: p.Title,
 					Type:  p.Type,
 				}
