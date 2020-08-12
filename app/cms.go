@@ -3,8 +3,8 @@ package cms
 import (
 	"gioui.org/layout"
 	"github.com/w-ingsolutions/c/pkg/lyt"
+	"github.com/w-ingsolutions/cms/pkg/phi"
 	"github.com/w-ingsolutions/cms/pkg/utl"
-	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
 var (

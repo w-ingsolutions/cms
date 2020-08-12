@@ -9,7 +9,7 @@ import (
 	"github.com/gioapp/gel/theme"
 	shell "github.com/ipfs/go-ipfs-api"
 	"github.com/w-ingsolutions/c/model"
-	"github.com/w-ingsolutions/cms/pkg/φ"
+	"github.com/w-ingsolutions/cms/pkg/phi"
 )
 
 type (

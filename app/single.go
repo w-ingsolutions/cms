@@ -12,7 +12,6 @@ import (
 	"github.com/w-ingsolutions/c/pkg/lyt"
 	"github.com/w-ingsolutions/cms/pkg/phi"
 	"github.com/w-ingsolutions/cms/pkg/utl"
-	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
 func φΦφ(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, slug string, struktura map[string]phi.F) func() {

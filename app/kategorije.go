@@ -7,7 +7,7 @@ import (
 	"github.com/gioapp/gel/helper"
 	"github.com/gioapp/gel/theme"
 	"github.com/w-ingsolutions/c/pkg/lyt"
-	"github.com/w-ingsolutions/cms/pkg/φ"
+	"github.com/w-ingsolutions/cms/pkg/phi"
 )
 
 func categories(th *theme.DuoUItheme, tip phi.ContentType) func() {

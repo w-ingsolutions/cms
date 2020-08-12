@@ -1,7 +1,7 @@
 package osnovna
 
 import (
-	"github.com/w-ingsolutions/cms/pkg/φ"
+	"github.com/w-ingsolutions/cms/pkg/phi"
 )
 
 func NewMaterijali() map[int]phi.Φ {

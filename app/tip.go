@@ -11,8 +11,8 @@ import (
 	"github.com/gioapp/gel/theme"
 	shell "github.com/ipfs/go-ipfs-api"
 	"github.com/w-ingsolutions/c/pkg/lyt"
+	"github.com/w-ingsolutions/cms/pkg/phi"
 	"github.com/w-ingsolutions/cms/pkg/utl"
-	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
 func podesavanjaTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, t map[string]phi.T, tip phi.ContentType) func() {

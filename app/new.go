@@ -14,6 +14,7 @@ import (
 	shell "github.com/ipfs/go-ipfs-api"
 	"github.com/ipfs/go-log/v2"
 	"github.com/w-ingsolutions/c/pkg/icons"
+	osnovna "github.com/w-ingsolutions/cms/DEF"
 )
 
 func NewWingCMS(settings WingPodesavanja) *WingCMS {
@@ -64,6 +65,7 @@ func NewWingCMS(settings WingPodesavanja) *WingCMS {
 		app.Size(unit.Dp(1280), unit.Dp(1024)),
 		app.Title("podesavanja.Title"),
 	)
+
 	counters := WingCounters{
 		Kolicina: &counter.DuoUIcounter{
 			Value:        1,
@@ -82,7 +84,26 @@ func NewWingCMS(settings WingPodesavanja) *WingCMS {
 	}
 	w.UI.Counters = counters
 	w.UI.Tema.Icons = icons.NewWingUIicons()
+	//////
 
+	///////////////
+	for _, radCat := range osnovna.RadoviKategorije() {
+
+		var network bytes.Buffer
+		//Create an encoder and send a value.
+		enc := gob.NewEncoder(&network)
+		err := enc.Encode(radCat)
+		checkError(err)
+		err = w.sh.FilesMkdir(ctx, "/wing/radovi/"+fmt.Sprint(radCat.ID))
+		checkError(err)
+		path := "/wing/radovi/" + fmt.Sprint(radCat.ID) + "/φ"
+		err = w.sh.FilesWrite(ctx, path, &network, shell.FilesWrite.Create(true))
+		checkError(err)
+		fmt.Println("sadrzajFilesCategoryStruct", path)
+	}
+	//////////////
+
+	//////
 	//var bytesBuf bytes.Buffer
 	//encoder := gob.NewEncoder(&bytesBuf)
 	//err := encoder.Encode(m)

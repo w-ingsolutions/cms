@@ -12,7 +12,6 @@ import (
 	shell "github.com/ipfs/go-ipfs-api"
 	"github.com/w-ingsolutions/c/pkg/lyt"
 	"github.com/w-ingsolutions/cms/pkg/phi"
-	"github.com/w-ingsolutions/cms/pkg/φ"
 )
 
 var (

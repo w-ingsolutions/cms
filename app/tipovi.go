@@ -3,7 +3,7 @@ package cms
 import (
 	"gioui.org/widget"
 	osnovni "github.com/w-ingsolutions/cms/DEF"
-	"github.com/w-ingsolutions/cms/pkg/φ"
+	"github.com/w-ingsolutions/cms/pkg/phi"
 )
 
 func CreateContentTypes() map[string]phi.T {

@@ -24,6 +24,7 @@ type C struct {
 	Desc   string
 	Slug   string
 	Parent string
+	Icon   []byte
 }
 
 type T struct {
