@@ -1,6 +1,7 @@
 package cms
 
 import (
+	"bytes"
 	"context"
 	"encoding/gob"
 	"fmt"
@@ -25,14 +26,14 @@ func sveOdTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, tip p
 				fmt.Println("sadrzajFiles", sadrzajFiles.Category)
 
 				///////////////
-				//var network bytes.Buffer
+				var network bytes.Buffer
 				//Create an encoder and send a value.
-				//enc := gob.NewEncoder(&network)
-				//err := enc.Encode(podesavanja)
-				//checkError(err)
-				//path := "/" + podesavanja.Dir + "/" + "materijali/φ" + fmt.Sprint(sadrzajFiles.ID)
-				//err = sh.FilesWrite(ctx, path, &network, shell.FilesWrite.Create(true))
-				//fmt.Println("sadrzajFilesCategoryStruct", path)
+				enc := gob.NewEncoder(&network)
+				err := enc.Encode(podesavanja)
+				checkError(err)
+				path := "/" + podesavanja.Dir + "/" + "materijali/φ" + fmt.Sprint(sadrzajFiles.ID)
+				err = sh.FilesWrite(ctx, path, &network, shell.FilesWrite.Create(true))
+				fmt.Println("sadrzajFilesCategoryStruct", path)
 				////////////////
 			}
 			prikaz.w = widgets
@@ -49,14 +50,14 @@ func sveOdTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, tip p
 				widgets[sadrzajFiles.Category+"_"+fmt.Sprint(sadrzajFiles.ID)] = new(widget.Clickable)
 				//fmt.Println("sadrzajFiles>>>>>", sadrzajFiles.Category+"_"+fmt.Sprint(sadrzajFiles.ID))
 				///////////////
-				//var network bytes.Buffer
+				var network bytes.Buffer
 				//Create an encoder and send a value.
-				//enc := gob.NewEncoder(&network)
-				//err := enc.Encode(podesavanja)
-				//checkError(err)
-				//path := "/" + podesavanja.Dir + "/" + "radovi/26/1/φ" + fmt.Sprint(sadrzajFiles.ID)
-				//err = sh.FilesWrite(ctx, path, &network, shell.FilesWrite.Create(true))
-				//fmt.Println("sadrzajFilesCategoryStruct", path)
+				enc := gob.NewEncoder(&network)
+				err := enc.Encode(podesavanja)
+				checkError(err)
+				path := "/" + podesavanja.Dir + "/" + "radovi/26/1/φ" + fmt.Sprint(sadrzajFiles.ID)
+				err = sh.FilesWrite(ctx, path, &network, shell.FilesWrite.Create(true))
+				fmt.Println("sadrzajFilesCategoryStruct", path)
 				////////////////
 			}
 			prikaz.w = widgets

@@ -15,6 +15,7 @@ import (
 	"github.com/ipfs/go-log/v2"
 	"github.com/w-ingsolutions/c/pkg/icons"
 	osnovna "github.com/w-ingsolutions/cms/DEF"
+	//osnovna "github.com/w-ingsolutions/cms/DEF"
 )
 
 func NewWingCMS(settings WingPodesavanja) *WingCMS {
@@ -86,7 +87,7 @@ func NewWingCMS(settings WingPodesavanja) *WingCMS {
 	w.UI.Tema.Icons = icons.NewWingUIicons()
 	//////
 
-	///////////////
+	/////////////////
 	for _, radCat := range osnovna.RadoviKategorije() {
 
 		var network bytes.Buffer
@@ -101,7 +102,7 @@ func NewWingCMS(settings WingPodesavanja) *WingCMS {
 		checkError(err)
 		fmt.Println("sadrzajFilesCategoryStruct", path)
 	}
-	//////////////
+	////////////////
 
 	//////
 	//var bytesBuf bytes.Buffer
