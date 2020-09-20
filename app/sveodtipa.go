@@ -26,14 +26,7 @@ func sveOdTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, tip p
 				fmt.Println("sadrzajFiles", sadrzajFiles.Category)
 
 				///////////////
-				var network bytes.Buffer
-				//Create an encoder and send a value.
-				enc := gob.NewEncoder(&network)
-				err := enc.Encode(podesavanja)
-				checkError(err)
-				path := "/" + podesavanja.Dir + "/" + "materijali/φ" + fmt.Sprint(sadrzajFiles.ID)
-				err = sh.FilesWrite(ctx, path, &network, shell.FilesWrite.Create(true))
-				fmt.Println("sadrzajFilesCategoryStruct", path)
+				go materijali(ctx, sh, sadrzajFiles)
 				////////////////
 			}
 			prikaz.w = widgets
@@ -45,29 +38,34 @@ func sveOdTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, tip p
 			}
 		}
 		if tip.SlugPlural == "radovi" {
-			files := osnovna.NewRadovi()
-			for _, sadrzajFiles := range files {
-				widgets[sadrzajFiles.Category+"_"+fmt.Sprint(sadrzajFiles.ID)] = new(widget.Clickable)
+			files261 := osnovna.NewRadovi261()
+			for _, sadrzajFiles261 := range files261 {
+				widgets[sadrzajFiles261.Category+"_"+fmt.Sprint(sadrzajFiles261.ID)] = new(widget.Clickable)
 				//fmt.Println("sadrzajFiles>>>>>", sadrzajFiles.Category+"_"+fmt.Sprint(sadrzajFiles.ID))
 				///////////////
-				var network bytes.Buffer
-				//Create an encoder and send a value.
-				enc := gob.NewEncoder(&network)
-				err := enc.Encode(podesavanja)
-				checkError(err)
-				path := "/" + podesavanja.Dir + "/" + "radovi/26/1/φ" + fmt.Sprint(sadrzajFiles.ID)
-				err = sh.FilesWrite(ctx, path, &network, shell.FilesWrite.Create(true))
-				fmt.Println("sadrzajFilesCategoryStruct", path)
+				go radovi261(ctx, sh, sadrzajFiles261)
+				////////////////
+			}
+			files263 := osnovna.NewRadovi263()
+			for _, sadrzajFiles236 := range files263 {
+				widgets[sadrzajFiles236.Category+"_"+fmt.Sprint(sadrzajFiles236.ID)] = new(widget.Clickable)
+				//fmt.Println("sadrzajFiles>>>>>", sadrzajFiles.Category+"_"+fmt.Sprint(sadrzajFiles.ID))
+				///////////////
+				go radovi263(ctx, sh, sadrzajFiles236)
 				////////////////
 			}
 			prikaz.w = widgets
-			for _, row := range files {
-				var r phi.Φ
-				r = row
-				sl := r.Struct["Slug"].Content.(string)
-
-				prikazLista = append(prikazLista, rowList(ctx, sh, th, r.Struct, widgets[r.Category+"_"+fmt.Sprint(r.ID)].(*widget.Clickable), tip.SlugPlural, r.Struct["Title"].Content.(string), sl))
-				//fmt.Println("slslsl::::::::::::", sl)
+			for _, rowA := range files261 {
+				var rA phi.Φ
+				rA = rowA
+				sl := rA.Struct["Slug"].Content.(string)
+				prikazLista = append(prikazLista, rowList(ctx, sh, th, rA.Struct, widgets[rA.Category+"_"+fmt.Sprint(rA.ID)].(*widget.Clickable), tip.SlugPlural, rA.Struct["Title"].Content.(string), sl))
+			}
+			for _, rowB := range files263 {
+				var rB phi.Φ
+				rB = rowB
+				sl := rB.Struct["Slug"].Content.(string)
+				prikazLista = append(prikazLista, rowList(ctx, sh, th, rB.Struct, widgets[rB.Category+"_"+fmt.Sprint(rB.ID)].(*widget.Clickable), tip.SlugPlural, rB.Struct["Title"].Content.(string), sl))
 			}
 		}
 		if tip.SlugPlural != "materijali" && tip.SlugPlural != "radovi" {
@@ -78,12 +76,8 @@ func sveOdTipa(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, tip p
 			}
 			prikaz.w = widgets
 			for _, row := range files {
-				file, err := sh.FilesRead(ctx, podesavanja.Dir+"/"+tip.SlugPlural+"/"+row.Name)
-				checkError(err)
-				var s phi.Φ
-				dec := gob.NewDecoder(file)
-				err = dec.Decode(&s)
-				checkError(err)
+				s := readFile(ctx, sh, podesavanja.Dir+"/"+tip.SlugPlural+"/"+row.Name)
+
 				prikazLista = append(prikazLista, rowList(ctx, sh, th, s.Struct, sadrzajDugme, tip.SlugPlural, s.Struct["Title"].Content.(string), s.Struct["Slug"].Content.(string)))
 			}
 		}
@@ -99,4 +93,46 @@ func rowList(ctx context.Context, sh *shell.Shell, th *theme.DuoUItheme, struktu
 			stranaDugme(th, btn, φΦφ(ctx, sh, th, tip, struktura), "Uredi", "sadrzaj"),
 		)
 	}
+}
+
+func materijali(ctx context.Context, sh *shell.Shell, sadrzajFiles phi.Φ) {
+	var network bytes.Buffer
+	//Create an encoder and send a value.
+	enc := gob.NewEncoder(&network)
+	err := enc.Encode(sadrzajFiles)
+	checkError(err)
+	path := "/" + podesavanja.Dir + "/" + "materijali/φ" + fmt.Sprint(sadrzajFiles.ID)
+	err = sh.FilesWrite(ctx, path, &network, shell.FilesWrite.Create(true))
+	fmt.Println("sadrzajFil7900000esCategoryStruct", path)
+}
+
+func radovi261(ctx context.Context, sh *shell.Shell, sadrzajFiles261 phi.Φ) {
+	var network bytes.Buffer
+	//Create an encoder and send a value.
+	enc := gob.NewEncoder(&network)
+	err := enc.Encode(sadrzajFiles261)
+	checkError(err)
+	path := "/" + podesavanja.Dir + "/" + "radovi/26/1/φ" + fmt.Sprint(sadrzajFiles261.ID)
+	err = sh.FilesWrite(ctx, path, &network, shell.FilesWrite.Create(true))
+	//fmt.Println("rM1", path)
+}
+
+func radovi263(ctx context.Context, sh *shell.Shell, sadrzajFiles236 phi.Φ) {
+	var network bytes.Buffer
+	//Create an encoder and send a value.
+	enc := gob.NewEncoder(&network)
+	err := enc.Encode(sadrzajFiles236)
+	checkError(err)
+	path := "/" + podesavanja.Dir + "/" + "radovi/26/3/φ" + fmt.Sprint(sadrzajFiles236.ID)
+	err = sh.FilesWrite(ctx, path, &network, shell.FilesWrite.Create(true))
+	//fmt.Println("rM3", path)
+}
+
+func readFile(ctx context.Context, sh *shell.Shell,path string) (s phi.Φ) {
+	file, err := sh.FilesRead(ctx, path)
+	checkError(err)
+	dec := gob.NewDecoder(file)
+	err = dec.Decode(&s)
+	checkError(err)
+	return
 }

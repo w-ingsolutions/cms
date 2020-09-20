@@ -9,8 +9,13 @@ type Φ struct {
 	ID       int
 	CID      cid.Cid
 	Category string
-	Struct   map[string]F
+	Struct   S
 }
+
+
+type S  map[string]F
+
+
 
 type F struct {
 	Title   string

@@ -10,7 +10,7 @@ func Materijal() phi.T {
 		TitlePlural: "Materijali",
 		Slug:        "materijal",
 		SlugPlural:  "materijali",
-		Struct: map[string]phi.F{
+		Struct: phi.S{
 			"Id":                phi.F{"Id", "Text", ""},
 			"Title":             phi.F{"Title", "Text", ""},
 			"Opis":              phi.F{"Opis", "Text", ""},
